@@ -1,0 +1,24 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    LIBRARY
+{% endblock %}
+
+
+{% block main %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+  </style>
+
+  <h1 class="lead text-center mt-4" id="header">YOUR LIBRARY</h1>
+
+  <div class="container">
+    {% for title in library %}
+      <div class="card mx-auto">
+        <h3 class="card-header border-0 lead text-center">{{ title.book_name }}</h3>
+        <img class="card-body" src="{{ title.book_cover }}" alt="Book cover">
+      </div>
+    {% endfor %}
+  </div>
+  
+{% endblock %}

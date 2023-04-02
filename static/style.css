@@ -1,0 +1,112 @@
+.light-theme {
+    /* LIGHT THEME */
+    /* --ash-gray: #96bbbbff;
+    --hookers-green: #618985ff;
+    --black-olive: #414535ff;
+    --dutch-white: #f2e3bcff; */
+    --background-color: #96bbbbff;
+    --primary-color: #618985ff;
+    --card-color: #618985ff;
+    --text-color: rgb(235, 234, 172);
+}
+
+.dark-theme {
+     /* DARK THEME */
+     /* --almond: #f1dac4ff;
+     --oxford-blue: #161b33ff;
+     --rich-black: #0d0c1dff; */
+    --background-color: #161b33ff;
+    --primary-color: #0d0c1dff;
+    --card-color: #0d0c1dff;
+    --text-color: #f1dac4ff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #999999;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+}
+
+main, body {
+    background-color: var(--background-color);
+}
+
+h1, h2, h3, h4, h5, p, label, li, a, .card-header {
+    color: var(--text-color)
+}
+
+button, .btn {
+    background-color: var(--card-color);
+    color: var(--text-color)
+}
+
+tr, td {
+    color: var(--text-color);
+    background-color: var(--card-color);
+}
+
+.theme-switch button {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.theme-switch button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.theme-switch button:active {
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+.navbar {
+    background-color: var(--primary-color);
+}
+
+.nav-link, .navbar-brand {
+    color: var(--text-color);
+}
+
+.card {
+    background-color: var(--card-color);
+}
+
+.navbar-brand {
+    margin-left: 1rem;
+}
+
+nav ul #login {
+    margin-right: 1rem;
+}
+
+.lead {
+    font-size: xx-large;
+}
+
+.card-header, .card-body, .card-footer {
+    background: transparent;
+}
+
+footer p {
+    margin-bottom: 0%;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background-color: var(--primary-color);
+  }

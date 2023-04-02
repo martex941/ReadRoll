@@ -1,0 +1,125 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    ROLLED
+{% endblock %}
+
+
+{% block main %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .card {
+            height: 450px;
+            width: auto;
+            margin: 0% 5% 0% 5%;
+        }
+
+        #book-info {
+            height: 300px !important; 
+            width: auto;
+            margin: 0% 5% 0% 5%;
+        } 
+
+        #description .card-body {
+            overflow-y: auto;
+            text-overflow: ellipsis;
+            margin-top: -0.2rem;
+        }
+
+        #book-title {
+            font-size: 1.5rem;
+        }
+
+        img.card-body {
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            width: 250px;
+        }
+
+        button {
+            margin: auto;
+        }
+
+        #row2 .card {
+            height: 100%;
+        }
+    </style>
+
+    <div class="container">
+
+        <div class="container">
+            <div class="row" id="row1">
+
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0" id="description">
+                        <h1 class="card-header border-0 lead text-center">DESCRIPTION</h1>
+                        <p class="card-body border-0">{{ book_description }}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0">
+                        <h1 class="card-header border-0 lead text-center" id="book-title">{{ book_title }}</h1>
+                        <img class="card-body" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0" id="book-info">
+                        <h5 class="card-body text-sm-start border-0">Authors: {{ book_authors }}</h5>
+                        <h5 class="card-body text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
+                        <h5 class="card-body text-sm-start border-0">Pages: {{ book_pages }}</h5>
+                        <h5 class="card-body text-sm-start border-0">Date: {{ book_date }}</h5>
+                        <div class="btn-block mt-5 text-start mx-auto" id="buttons">
+                            {% if session["user_id"] %}
+                                <button onclick="location.reload()" class="btn btn-light mt-lg-5">ROLL AGAIN</button>
+                                <button onclick="location.href='/'" class="btn btn-light mt-lg-5">CHANGE GENRE</button>
+                                <form action="/rolled/genre>" method="POST">
+                                <button class="btn btn-light mt-lg-5" name="add-book">ADD TO MY LIBRARY</button>
+                                </form>
+                            {% else %}
+                                <button onclick="location.reload()" class="btn mt-lg-5">ROLL AGAIN</button>
+                                <button onclick="location.href='/'" class="btn mt-lg-5">CHANGE GENRE</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+
+        <h2 class="lead text-center mt-5">BUY THE BOOK</h2>
+
+        <div class="row justify-content-center" id="row2">
+
+            <div class="col-md-3">
+                <div class="card border-0">
+                    <div id="hard-cover" class="card-body text-center">
+                        <h2 class="card-footer border-0">HARD COVER</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card border-0">
+                    <div id="e-book" class="card-body text-center">
+                        <h2 class="card-footer border-0">E-BOOK</h2> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card border-0">
+                    <div id="audiobook" class="card-body text-center">
+                        <h2 class="card-footer border-0">AUDIOBOOK</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

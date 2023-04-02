@@ -1,0 +1,36 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    ABOUT
+{% endblock %}
+
+
+{% block main %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .container-fluid {
+      background-color: var(--primary-color);
+      max-width: 550px;
+      border-radius: 10%;
+      font-size: 18px;
+    }
+  </style>
+
+  <div class="container-fluid mt-4 mb-4">
+    <h1 class="text-center modal-header">About ReadRoll</h1>
+    <p class="text-center">
+      ReadRoll is my CS50x final project. 
+      The website's purpose is to generate a random book based on the user's input. 
+      The core idea is to help people who have a difficult time choosing new books to read.
+      With the help of ReadRoll the user's worries are taken away as the choice is randomized.
+      <br>
+      <br>
+      The website is based on <a href="https://developers.google.com/books/">Google Books API</a>.
+      Apart from its main feature, it allows the user to look into their history of rolled book, as well as, add a rolled book to their library once the user is logged in.
+      Every time you roll a book there are also quick links to buy it in various formats.
+    </p>
+  </div>
+  
+
+  
+{% endblock %}
