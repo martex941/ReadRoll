@@ -6,6 +6,7 @@
 
 {% block main %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
     <style>
         form {
             margin-top: 3rem;
@@ -23,7 +24,7 @@
                 <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm password" type="password">
             </div>
             <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Register</button>
+                <button class="btn" type="submit">Register</button>
             </div>
         </form>
     </div>

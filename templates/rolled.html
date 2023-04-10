@@ -7,6 +7,7 @@
 
 {% block main %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
     <style>
         .card {
             height: 450px;
@@ -90,14 +91,14 @@
             </div>
         </div>
 
-        <h2 class="lead text-center mt-5">BUY THE BOOK</h2>
+        <h2 class="lead text-center">BUY THE BOOK</h2>
 
         <div class="row justify-content-center" id="row2">
 
             <div class="col-md-3">
                 <div class="card border-0">
                     <div id="hard-cover" class="card-body text-center">
-                        <h2 class="card-footer border-0">HARD COVER</h2>
+                        <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A5&ref=nb_sb_noss" target="_blank">HARD COVER</a></h2>
                     </div>
                 </div>
             </div>
@@ -105,7 +106,7 @@
             <div class="col-md-3">
                 <div class="card border-0">
                     <div id="e-book" class="card-body text-center">
-                        <h2 class="card-footer border-0">E-BOOK</h2> 
+                        <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A154606011&ref=nb_sb_noss" target="_blank">E-BOOK</a></h2> 
                     </div>
                 </div>
             </div>
@@ -113,7 +114,7 @@
             <div class="col-md-3">
                 <div class="card border-0">
                     <div id="audiobook" class="card-body text-center">
-                        <h2 class="card-footer border-0">AUDIOBOOK</h2>
+                        <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A283155&ref=nb_sb_noss" target="_blank">AUDIOBOOK</a></h2>
                     </div>
                 </div>
             </div>
