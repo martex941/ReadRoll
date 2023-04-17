@@ -43,12 +43,7 @@ h1, h2, h3, h4, h5, p, label, li, a, .card-header {
     color: var(--text-color)
 }
 
-button, .btn {
-    background-color: var(--card-color);
-    color: var(--text-color)
-}
-
-tr, td {
+tr, td, button, .btn {
     color: var(--text-color);
     background-color: var(--card-color);
 }
@@ -110,3 +105,14 @@ footer {
     height: 3rem;
     background-color: var(--primary-color);
   }
+
+#alert-message {
+    background-color: aliceblue;
+    width: 15%;
+    border-radius: 15px;
+    margin-top: 1.5rem;
+}
+
+#alert-message h5 {
+    color: var(--card-color)
+}

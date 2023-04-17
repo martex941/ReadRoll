@@ -24,4 +24,14 @@
             <button class="btn" type="submit">Log In</button>
         </form>
     </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+                {% for message in messages %}
+                <div id="alert-message" class=" container alert alert-{type} alert-dismissible fade show" role="alert" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <h5 class="text-center">{{ message }}</h5>
+                </div>
+                {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}

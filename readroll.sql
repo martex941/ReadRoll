@@ -33,6 +33,8 @@
 
 -- username: ADMIN1 password: admin1
 
+-- DELETE FROM library WHERE book_id < 20;
+
 
 SELECT * FROM users;
 SELECT * FROM library;

@@ -7,6 +7,8 @@
 
 {% block main %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
+
   <style>
     .container {
         margin-left: 0%;
@@ -18,43 +20,45 @@
         margin-top: 0.5rem;
         margin-left: 0.5rem;
     }
+
+
     
   </style>
 <div class="row">
-<div class="col">
-    <h1 class="lead text-center">HISTORY</h1>
-    <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Author</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for title in history %}
-        <tr>
-            <td>{{ title.book_name }}</td>
-            <td>{{ title.author }}</td>
-            <td>{{ title.date_added }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    </table>
-</div>
-<div class="col-4">
-    <h1 class="lead text-center">STATS</h1>
-    <div class="card">
-        <h4>You've rolled {some amount} books.</h4>
-        <h4>Your favorite 3 book genres to roll are:</h4>
-        <ul>
-            <li>{first most rolled genre}</li>
-            <li>{second most rolled genre}</li>
-            <li>{third most rolled genre}</li>
-        </ul>
-
+    <div class="col">
+        <h1 class="lead text-center">HISTORY</h1>
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for title in history %}
+            <tr>
+                <td>{{ title.book_name }}</td>
+                <td>{{ title.author }}</td>
+                <td>{{ title.date_added }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
     </div>
-</div>
+    <div class="col-4" id="stats">
+        <h1 class="lead text-center">STATISTICS</h1>
+        <div class="card">
+            <h4>You've rolled {some amount} books.</h4>
+            <h4>Your favorite 3 book genres to roll are:</h4>
+            <ul>
+                <li>{first most rolled genre}</li>
+                <li>{second most rolled genre}</li>
+                <li>{third most rolled genre}</li>
+            </ul>
+
+        </div>
+    </div>
 </div>
 
 {% endblock %}

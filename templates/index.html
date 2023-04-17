@@ -7,6 +7,8 @@
 
 {% block main %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
+
   <style>
     .row {
       margin-right: 15%;
@@ -14,16 +16,17 @@
     }
 
     .card {
-    height: 205px;
-    width: auto;
-    max-width: 130px;
+      height: 205px;
+      width: auto;
+      max-width: 130px;
+      margin-bottom: 1rem;
     }
 
     img.card-body {
-        margin-left: auto;
-        margin-right: auto;
-        height: 160px;
-        width: 123px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 160px;
+      width: 123px;
     }
 
     .card-header {

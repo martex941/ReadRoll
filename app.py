@@ -3,7 +3,7 @@ import sqlite3
 import random
 
 from functions import login_required, search_books
-from flask import Flask, render_template, redirect, session, request
+from flask import Flask, flash, render_template, redirect, session, request
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__, static_url_path='/static')
@@ -67,7 +67,6 @@ def rolled(genre):
         except KeyError:
             continue
 
-    print(random_book)
     # Put the data into separate variables
     book_title = random_book["title"]
     book_authors = random_book.get("authors", ["Unavaliable"])[0]
@@ -89,7 +88,7 @@ def rolled(genre):
         cursor.execute("SELECT position_id FROM history")
         positions = cursor.fetchall()
         if len(positions) > 50:
-            cursor.execute("DELTE FROM history WHERE position_id=?", positions[0])
+            cursor.execute("DELETE FROM history WHERE position_id=?", positions[0])
             cursor.execute("INSERT INTO history (book_name, author, user_id) VALUES (?, ?, ?)", (book_title, book_authors, session["user_id"]))
             db.commit()
         else:
@@ -117,18 +116,27 @@ def register():
     if request.method == "POST":
         # If there is no username input, render an apology
         if not request.form.get("username"):
+            flash("Please enter your username and password.")
             return render_template("register.html")
 
         # If there is no password input, render an apology
         elif not request.form.get("password"):
+            flash("Please enter your username and password.")
+            return render_template("register.html")
+        
+        # If the password is shorter than 8 characters, render an apology
+        elif len(request.form.get("password")) < 8:
+            flash("Please enter a password that is 8 characters or longer.")
             return render_template("register.html")
 
         # If the password is not confirmed, render an apology
         elif not request.form.get("confirmation"):
+            flash("Please confirm your password.")
             return render_template("register.html")
 
         # If the passwords do not match, render an apology
         elif request.form.get("confirmation") != request.form.get("password"):
+            flash("Passwords do not match.")
             return render_template("register.html")
 
         # Necessary variables
@@ -166,10 +174,12 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
+            flash("Please enter your username and password.")
             return render_template("login.html")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
+            flash("Please enter your username and password.")
             return render_template("login.html")
 
         cursor.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),))

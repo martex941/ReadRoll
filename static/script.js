@@ -6,7 +6,9 @@ function toggleSwitch() {
     // Save the user's theme preference in local storage
     if (body.classList.contains("dark-theme")) {
         localStorage.setItem("theme", "dark");
-    } else {
+    } 
+
+    else {
         localStorage.setItem("theme", "light");
     }
 }
@@ -18,12 +20,32 @@ function setTheme() {
 
     if (theme === "dark") {
         body.classList.add("dark-theme");
-    } else {
+    } 
+
+    else {
         body.classList.remove("dark-theme");
-  }
+    }
 }
 
 // Make sure that the theme is set before the main content of the page loads
 document.addEventListener("DOMContentLoaded", function() {
     setTheme();
 });
+
+
+
+// Dynamic footer depending whether the scrollbar is present or not
+window.addEventListener('load', () => {
+    const fixedFooterCSS = document.getElementById('fixed-footer');
+    const hasScrollbar = () => document.documentElement.scrollHeight > window.innerHeight;
+    const toggleFixedFooterCSS = () => {
+      if (hasScrollbar()) {
+        fixedFooterCSS.disabled = true;
+      } else {
+        fixedFooterCSS.disabled = false;
+      }
+    };
+    toggleFixedFooterCSS();
+    window.addEventListener('resize', toggleFixedFooterCSS);
+    window.addEventListener('scroll', toggleFixedFooterCSS);
+  });

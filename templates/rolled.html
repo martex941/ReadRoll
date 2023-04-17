@@ -48,7 +48,6 @@
     </style>
 
     <div class="container">
-
         <div class="container">
             <div class="row" id="row1">
 
@@ -72,11 +71,11 @@
                         <h5 class="card-body text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
                         <h5 class="card-body text-sm-start border-0">Pages: {{ book_pages }}</h5>
                         <h5 class="card-body text-sm-start border-0">Date: {{ book_date }}</h5>
-                        <div class="btn-block mt-5 text-start mx-auto" id="buttons">
+                        <div class="btn-block text-start mx-auto" id="buttons">
                             {% if session["user_id"] %}
                                 <button onclick="location.reload()" class="btn btn-light mt-lg-5">ROLL AGAIN</button>
                                 <button onclick="location.href='/'" class="btn btn-light mt-lg-5">CHANGE GENRE</button>
-                                <form action="/rolled/genre>" method="POST">
+                                <form class="d-flex justify-content-center align-items-center" action="/rolled/genre>" method="POST">
                                 <button class="btn btn-light mt-lg-5" name="add-book">ADD TO MY LIBRARY</button>
                                 </form>
                             {% else %}
@@ -85,40 +84,39 @@
                             {% endif %}
                         </div>
                     </div>
-                    
                 </div>
-                
             </div>
         </div>
 
-        <h2 class="lead text-center">BUY THE BOOK</h2>
+        <div class="container">
+            <h2 class="lead text-center">BUY THE BOOK</h2>
+            <div class="row justify-content-center" id="row2">
 
-        <div class="row justify-content-center" id="row2">
-
-            <div class="col-md-3">
-                <div class="card border-0">
-                    <div id="hard-cover" class="card-body text-center">
-                        <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A5&ref=nb_sb_noss" target="_blank">HARD COVER</a></h2>
+                <div class="col-md-3">
+                    <div class="card border-0">
+                        <div id="hard-cover" class="card-body text-center">
+                            <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A5&ref=nb_sb_noss" target="_blank">HARD COVER</a></h2>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="card border-0">
-                    <div id="e-book" class="card-body text-center">
-                        <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A154606011&ref=nb_sb_noss" target="_blank">E-BOOK</a></h2> 
+                <div class="col-md-3">
+                    <div class="card border-0">
+                        <div id="e-book" class="card-body text-center">
+                            <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A154606011&ref=nb_sb_noss" target="_blank">E-BOOK</a></h2> 
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-3">
-                <div class="card border-0">
-                    <div id="audiobook" class="card-body text-center">
-                        <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A283155&ref=nb_sb_noss" target="_blank">AUDIOBOOK</a></h2>
+                <div class="col-md-3">
+                    <div class="card border-0">
+                        <div id="audiobook" class="card-body text-center">
+                            <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A283155&ref=nb_sb_noss" target="_blank">AUDIOBOOK</a></h2>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
 
