@@ -8,17 +8,41 @@
 {% block main %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   <style>
-    
+    .card {
+    height: 205px;
+    width: auto;
+    max-width: 130px;
+    }
+
+    img.card-body {
+        margin-left: auto;
+        margin-right: auto;
+        height: 160px;
+        width: 123px;
+    }
+
+    .card-header {
+      font-size: 15px;
+      height: 60px;
+      margin-bottom: -1rem;
+    }
+
   </style>
 
   <h1 class="lead text-center mt-4" id="header">YOUR LIBRARY</h1>
 
   <div class="container">
     {% for title in library %}
-      <div class="card mx-auto">
+      {% if loop.index0 % 8 == 0 %}
+        <div class="row">
+      {% endif %}
+      <div class="card mx-auto mb-4">
         <h3 class="card-header border-0 lead text-center">{{ title.book_name }}</h3>
         <img class="card-body" src="{{ title.book_cover }}" alt="Book cover">
       </div>
+      {% if loop.index0 % 8 == 7 or loop.last %}
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
   
