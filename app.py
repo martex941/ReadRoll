@@ -85,7 +85,7 @@ def rolled(genre):
     # If the user is logged in add the roll to their history and let them add a title to their library
     if session.get("user_id"):
         # If there are more than 50 titles in the user's history, delete the first one to make space for the new title, if the history isn't full, just add the new title
-        cursor.execute("SELECT position_id FROM history")
+        cursor.execute("SELECT position_id FROM history WHERE user_id=?", (session["user_id"],))
         positions = cursor.fetchall()
         if len(positions) > 50:
             cursor.execute("DELETE FROM history WHERE position_id=?", positions[0])
@@ -95,9 +95,15 @@ def rolled(genre):
             cursor.execute("INSERT INTO history (book_name, author, user_id) VALUES (?, ?, ?)", (book_title, book_authors, session["user_id"]))
             db.commit()
 
-        if request.method == "POST" and 'add-book' in request.form: 
+        # Rolled book is added to the library
+        cursor.execute("SELECT book_name FROM library WHERE user_id=?", (session["user_id"],))
+        titles = cursor.fetchall()
+        if request.method == "POST" and 'add-book' in request.form and book_title in titles: 
+            flash(f"{book_title} is already in your library.")
+        elif request.method == "POST" and 'add-book' in request.form and book_title not in titles:
             cursor.execute("INSERT INTO library (book_name, author, book_cover, user_id) VALUES (?, ?, ?, ?)", (book_title, book_authors, book_cover, session["user_id"]))
             db.commit()
+            flash(f"{book_title} added to your library.")
     
     return render_template('rolled.html', book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)
 
@@ -147,6 +153,7 @@ def register():
         cursor.execute("SELECT username FROM users WHERE username = :username", {"username": username})
         usernames = cursor.fetchall()
         if len(usernames) == 1:
+            flash("Username is already registered.")
             return render_template("register.html")
 
         # Add the newly registered user to the database

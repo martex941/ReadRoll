@@ -6,7 +6,7 @@
 
 {% block main %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
+    <link id="fixed-footer" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
     <style>
         form {
             margin-top: 3rem;

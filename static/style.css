@@ -1,3 +1,4 @@
+/* THEME COLORS*/
 .light-theme {
     /* LIGHT THEME */
     /* --ash-gray: #96bbbbff;
@@ -21,33 +22,7 @@
     --text-color: #f1dac4ff;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #999999;
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #f8f8f8;
-    border-radius: 10px;
-}
-
-main, body {
-    background-color: var(--background-color);
-}
-
-h1, h2, h3, h4, h5, p, label, li, a, .card-header {
-    color: var(--text-color)
-}
-
-tr, td, button, .btn {
-    color: var(--text-color);
-    background-color: var(--card-color);
-}
-
+/* THEME SWITCH BUTTON */
 .theme-switch button {
     display: inline-block;
     padding: 8px 16px;
@@ -66,6 +41,35 @@ tr, td, button, .btn {
     box-shadow: none;
 }
 
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #999999;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+}
+
+/* General theme colors */
+main, body {
+    background-color: var(--background-color);
+}
+
+h1, h2, h3, h4, h5, p, label, li, a, .card-header {
+    color: var(--text-color)
+}
+
+tr, td, button, .btn {
+    color: var(--text-color);
+    background-color: var(--card-color);
+}
+
 .navbar {
     background-color: var(--primary-color);
 }
@@ -78,14 +82,6 @@ tr, td, button, .btn {
     background-color: var(--card-color);
 }
 
-.navbar-brand {
-    margin-left: 1rem;
-}
-
-nav ul #login {
-    margin-right: 1rem;
-}
-
 .lead {
     font-size: xx-large;
 }
@@ -94,6 +90,36 @@ nav ul #login {
     background: transparent;
 }
 
+/* NAVBAR */
+.navbar-toggler-icon {
+    width: auto;
+    height: auto;
+    background-color: transparent;
+}
+
+.navbar-toggler-icon::before {
+    content: "\2630" !important;
+  }
+
+@media (max-width: 991px) {
+    .nav-link {
+        margin-left: 1rem;
+    }
+    .theme-switch {
+        justify-content: left;
+    }
+}
+
+
+.navbar-brand {
+    margin-left: 1rem;
+}
+
+nav ul #login {
+    margin-right: 1rem;
+}
+
+/* FOOTER */
 footer p {
     margin-bottom: 0%;
 }
@@ -102,10 +128,23 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 1rem;
     height: 3rem;
     background-color: var(--primary-color);
-  }
+}
 
+@media (max-width: 991px) {
+    footer a {
+        font-size: medium;
+        margin-left: 1px;
+    }
+
+    footer p {
+        width:255px;
+    }
+}
+
+/* ALERTS */
 #alert-message {
     background-color: aliceblue;
     width: 15%;

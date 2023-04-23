@@ -16,10 +16,19 @@
         }
 
         #book-info {
-            height: 300px !important; 
+            height: 450px; 
             width: auto;
             margin: 0% 5% 0% 5%;
         } 
+
+        #book-info h5 {
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        #book-info .btn {
+            width: 175px;
+        }
 
         #description .card-body {
             overflow-y: auto;
@@ -38,19 +47,62 @@
             width: 250px;
         }
 
-        button {
-            margin: auto;
-        }
-
         #row2 .card {
             height: 100%;
         }
+
+        @media (max-width: 767px) {
+            #book-info .btn {
+                margin-top: 2.5rem;
+            }
+        }
+
+        @media (max-width: 991px) {
+            /* BUY SECTION */
+            #buy-section {
+                margin-bottom: -1rem;
+            }
+
+            #buy-section .card {
+                margin-left: -2rem;
+            }
+
+            #buy-section h2, a {
+                font-size: 20px;
+                margin: -0.5rem;
+            }
+
+            /* ABOUT THE BOOK SECTION */
+            #about-book .card {
+                width: 240px;
+            }
+
+            #about-book .col-md-4 {
+                width: auto;
+                margin-left: -1rem;
+                margin-right: -1rem;
+            }
+
+            #about-book #book-cover {
+                max-width: fit-content;
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 1199px) {
+
+        }
+
     </style>
 
+    <!-- Container for the whole content in main -->
     <div class="container">
-        <div class="container">
+
+        <!-- This contains the description, book cover and book information cards -->
+        <div class="container" id="about-book">
             <div class="row" id="row1">
 
+                <!-- Description of the book -->
                 <div class="col-md-4 mt-4">
                     <div class="card mb-3 border-0" id="description">
                         <h1 class="card-header border-0 lead text-center">DESCRIPTION</h1>
@@ -58,24 +110,28 @@
                     </div>
                 </div>
 
+                <!-- Book title and the cover page -->
                 <div class="col-md-4 mt-4">
-                    <div class="card mb-3 border-0">
+                    <div class="card mb-3 border-0" id="book-title-cover">
                         <h1 class="card-header border-0 lead text-center" id="book-title">{{ book_title }}</h1>
                         <img class="card-body" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
                     </div>
                 </div>
 
+                <!-- Basic information about the book -->
                 <div class="col-md-4 mt-4">
                     <div class="card mb-3 border-0" id="book-info">
-                        <h5 class="card-body text-sm-start border-0">Authors: {{ book_authors }}</h5>
-                        <h5 class="card-body text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
-                        <h5 class="card-body text-sm-start border-0">Pages: {{ book_pages }}</h5>
-                        <h5 class="card-body text-sm-start border-0">Date: {{ book_date }}</h5>
+                        <h5 class="text-sm-start border-0">Authors: {{ book_authors }}</h5>
+                        <h5 class="text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
+                        <h5 class="text-sm-start border-0">Pages: {{ book_pages }}</h5>
+                        <h5 class="text-sm-start border-0">Date: {{ book_date }}</h5>
+                        <!-- A set of useful buttons -->
                         <div class="btn-block text-start mx-auto" id="buttons">
                             {% if session["user_id"] %}
                                 <button onclick="location.reload()" class="btn btn-light mt-lg-5">ROLL AGAIN</button>
+                                <br>
                                 <button onclick="location.href='/'" class="btn btn-light mt-lg-5">CHANGE GENRE</button>
-                                <form class="d-flex justify-content-center align-items-center" action="/rolled/genre>" method="POST">
+                                <form method="POST">
                                 <button class="btn btn-light mt-lg-5" name="add-book">ADD TO MY LIBRARY</button>
                                 </form>
                             {% else %}
@@ -88,10 +144,12 @@
             </div>
         </div>
 
-        <div class="container">
-            <h2 class="lead text-center">BUY THE BOOK</h2>
+        <!-- "Buy the book" section -->
+        <div class="container" id="buy-section">
+            <h3 class="text-center">BUY THE BOOK</h3>
             <div class="row justify-content-center" id="row2">
 
+                <!-- Amazon link to the papaerback and hardcover versions of the book -->
                 <div class="col-md-3">
                     <div class="card border-0">
                         <div id="hard-cover" class="card-body text-center">
@@ -100,6 +158,7 @@
                     </div>
                 </div>
 
+                <!-- Amazon link to the e-book version of the book -->
                 <div class="col-md-3">
                     <div class="card border-0">
                         <div id="e-book" class="card-body text-center">
@@ -108,6 +167,7 @@
                     </div>
                 </div>
 
+                <!-- Amazon link to the audiobook version of the book -->
                 <div class="col-md-3">
                     <div class="card border-0">
                         <div id="audiobook" class="card-body text-center">
@@ -119,6 +179,18 @@
             </div>
         </div>
     </div>
+    
+    <!-- Flash message if the user decides to add the book to their library -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+                {% for message in messages %}
+                <div id="alert-message" class=" container alert alert-{type} alert-dismissible fade show" role="alert" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <h5 class="text-center">{{ message }}</h5>
+                </div>
+                {% endfor %}
+        {% endif %}
+    {% endwith %}
 
 
 {% endblock %}
