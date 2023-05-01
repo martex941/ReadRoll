@@ -18,12 +18,19 @@ app.secret_key='admin12345'
 def index():
     return render_template('index.html')
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
 
 
-@app.route('/library')
+@app.route('/book_view', methods=["GET", "POST"])
+@login_required
+def book_view():
+    return render_template("book_view.html")
+
+
+@app.route('/library', methods=["GET", "POST"])
 @login_required
 def library():
     db = sqlite3.connect('readroll.db')
@@ -33,17 +40,34 @@ def library():
     lib = cursor.fetchall()
     library = [dict(i) for i in lib]
 
-    return render_template('library.html', library=library)
+    if request.method == 'POST':
+        if request.form.get('search-text') == '':
+            return render_template('library.html', library=library)
+
+        search_query = request.form.get("search-text")
+        cursor.execute("SELECT * FROM library WHERE user_id=? AND book_name LIKE ? OR user_id=? AND author LIKE ?", (session["user_id"], f'%{search_query}%', session["user_id"], f'%{search_query}%'))
+        slib = cursor.fetchall()
+        searched_library = [dict(i) for i in slib]
+        return render_template('library.html', searched_library=searched_library)
+    else:
+        return render_template('library.html', library=library)
 
 
 @app.route("/history")
 @login_required
 def history():
+    # Connect to the database and create 
     db = sqlite3.connect('readroll.db')
+
+    # Create rows which will help with making a dictionary to put it into a table
     db.row_factory = sqlite3.Row
     cursor = db.cursor()
+
+    # Get the user's history data
     cursor.execute("SELECT * FROM history WHERE user_id=? ORDER BY date_added DESC", (session["user_id"],))
     lib = cursor.fetchall()
+
+    # Create a dictionary out of the fetched data
     history = [dict(i) for i in lib]
 
     return render_template('history.html', history=history)
@@ -78,7 +102,7 @@ def rolled(genre):
     # If there is no 'imageLinks' key, render a "NoBookCover" template image
     if "imageLinks" not in random_book:
         book_cover = "https://www.lse.ac.uk/International-History/Images/Books/NoBookCover.png"
-    # This is to ensure that there is a 'thumbnail' key within the 'imageLinks' key
+    # This is to ensure that there is a 'thumbnail' key within the 'imageLinks' key, because sometimes it is not
     else:
         book_cover = random_book['imageLinks'].get('thumbnail', 'https://www.lse.ac.uk/International-History/Images/Books/NoBookCover.png')
 
@@ -98,15 +122,17 @@ def rolled(genre):
         # Rolled book is added to the library
         cursor.execute("SELECT book_name FROM library WHERE user_id=?", (session["user_id"],))
         titles = cursor.fetchall()
-        if request.method == "POST" and 'add-book' in request.form and book_title in titles: 
-            flash(f"{book_title} is already in your library.")
-        elif request.method == "POST" and 'add-book' in request.form and book_title not in titles:
-            cursor.execute("INSERT INTO library (book_name, author, book_cover, user_id) VALUES (?, ?, ?, ?)", (book_title, book_authors, book_cover, session["user_id"]))
-            db.commit()
-            flash(f"{book_title} added to your library.")
+        titles_list = [title[0] for title in titles]
+        if request.method == "POST" and 'add-book' in request.form: 
+            if book_title not in titles_list:
+                cursor.execute("INSERT INTO library (book_name, author, book_cover, user_id) VALUES (?, ?, ?, ?)", (book_title, book_authors, book_cover, session["user_id"]))
+                db.commit()
+                flash(f"{book_title} has been added to your library.")
+            else:
+                flash(f"{book_title} is already in your library.")
+            
     
-    return render_template('rolled.html', book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)
-
+    return render_template('rolled.html', genre=genre, book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -208,6 +234,7 @@ def login():
         return render_template("login.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     """Log user out"""
 

@@ -1,0 +1,140 @@
+{% extends "layout.html"%}
+
+{% block title %}
+    BOOKVIEW
+{% endblock %}
+
+
+{% block main %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link id="fixed-footer" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
+    <style>
+        .card {
+            height: 450px;
+            width: auto;
+            margin: 0% 5% 0% 5%;
+        }
+
+        #book-cover {
+            margin: auto;
+        }
+
+        #book-info {
+            height: 450px; 
+            width: auto;
+            margin: 0% 5% 0% 5%;
+        } 
+
+        #book-info h5 {
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        #book-info .btn {
+            width: 175px;
+        }
+
+        #description .card-body {
+            overflow-y: auto;
+            text-overflow: ellipsis;
+            margin-top: -0.2rem;
+        }
+
+        img.card-body {
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            width: 250px;
+        }
+
+        #buttons .btn {
+            margin-top: 1rem;
+        }
+
+        #logged-out .btn {
+            display: flex;
+            justify-content: center;
+        }
+
+        .col-md-4 {
+            height: 450px;
+        }
+
+        #alert-message {
+            width: 25%;
+        }
+
+
+        /* Accommodating for various resolutions */
+        @media (max-width: 767px) {
+            .row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 991px) {
+            /* ABOUT THE BOOK SECTION */
+            #about-book .card {
+                width: 240px;
+            }
+
+            #about-book .col-md-4 {
+                width: auto;
+                margin-left: -1rem;
+                margin-right: -1rem;
+            }
+
+            #about-book #book-cover {
+                max-width: fit-content;
+                max-height: 300px;
+            }
+        }
+
+    </style>
+        
+    <!-- Container for the whole content in main -->
+    <div class="container">
+
+        <!-- This contains the description, book cover and book information cards -->
+        <div class="container" id="about-book">
+            <div class="row">
+
+                <!-- Basic information about the book -->
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0" id="book-info">
+                        <h5 class="text-sm-start border-0">Title: {{ book_title }}</h5>
+                        <h5 class="text-sm-start border-0">Authors: {{ book_authors }}</h5>
+                        <h5 class="text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
+                        <h5 class="text-sm-start border-0">Pages: {{ book_pages }}</h5>
+                        <h5 class="text-sm-start border-0">Date: {{ book_date }}</h5>
+                        {% if session["user_id"] %}
+                            <div class="mx-auto" id="logged-in">
+                                <form method="post" id="delete-book">
+                                    <button id="delete-book-button" class="btn btn-light " name="delete-book">DELETE THE BOOK FROM MY LIBRARY</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+    
+                <!-- Cover page -->
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0"">
+                        <img class="card-body card-img-overlay" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
+                    </div>
+                </div>
+
+                <!-- Description of the book -->
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0" id="description">
+                        <h1 class="card-header border-0 lead text-center">DESCRIPTION</h1>
+                        <p class="card-body border-0">{{ book_description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+    
+{% endblock %}

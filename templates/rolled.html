@@ -7,12 +7,16 @@
 
 {% block main %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
+    <link id="fixed-footer" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> <!-- This is so that the footer always stays at the bottom of the page -->
     <style>
         .card {
             height: 450px;
             width: auto;
             margin: 0% 5% 0% 5%;
+        }
+
+        #book-cover {
+            margin: auto;
         }
 
         #book-info {
@@ -36,8 +40,8 @@
             margin-top: -0.2rem;
         }
 
-        #book-title {
-            font-size: 1.5rem;
+        #buy-section {
+            margin-top: 1rem;
         }
 
         img.card-body {
@@ -51,9 +55,35 @@
             height: 100%;
         }
 
+        #buttons .btn {
+            margin-top: 1rem;
+        }
+
+        #logged-out .btn {
+            display: flex;
+            justify-content: center;
+        }
+
+        .col-md-4 {
+            height: 450px;
+        }
+
+        #alert-message {
+            width: 25%;
+        }
+
+
+        /* Accommodating for various resolutions */
+        
         @media (max-width: 767px) {
-            #book-info .btn {
-                margin-top: 2.5rem;
+            #buy-section .card {
+                margin-bottom: 1rem;
+            }
+
+            .row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
 
@@ -64,7 +94,7 @@
             }
 
             #buy-section .card {
-                margin-left: -2rem;
+                width: 170px;
             }
 
             #buy-section h2, a {
@@ -89,38 +119,31 @@
             }
         }
 
-        @media (max-width: 1199px) {
+        @media (max-width: 1199px), (max-width: 1399px) {
+            /* BUY SECTION */
+            #buy-section {
+                margin-bottom: 0rem;
+            }
 
+            #buy-section h2, a {
+                font-size: 20px;
+                margin: -0.5rem;
+            }
         }
-
     </style>
-
+        
     <!-- Container for the whole content in main -->
     <div class="container">
 
+        <h1 class="lead text-center mt-4">{{ genre }}</h1>
         <!-- This contains the description, book cover and book information cards -->
         <div class="container" id="about-book">
             <div class="row" id="row1">
 
-                <!-- Description of the book -->
-                <div class="col-md-4 mt-4">
-                    <div class="card mb-3 border-0" id="description">
-                        <h1 class="card-header border-0 lead text-center">DESCRIPTION</h1>
-                        <p class="card-body border-0">{{ book_description }}</p>
-                    </div>
-                </div>
-
-                <!-- Book title and the cover page -->
-                <div class="col-md-4 mt-4">
-                    <div class="card mb-3 border-0" id="book-title-cover">
-                        <h1 class="card-header border-0 lead text-center" id="book-title">{{ book_title }}</h1>
-                        <img class="card-body" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
-                    </div>
-                </div>
-
                 <!-- Basic information about the book -->
                 <div class="col-md-4 mt-4">
                     <div class="card mb-3 border-0" id="book-info">
+                        <h5 class="text-sm-start border-0">Title: {{ book_title }}</h5>
                         <h5 class="text-sm-start border-0">Authors: {{ book_authors }}</h5>
                         <h5 class="text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
                         <h5 class="text-sm-start border-0">Pages: {{ book_pages }}</h5>
@@ -128,17 +151,36 @@
                         <!-- A set of useful buttons -->
                         <div class="btn-block text-start mx-auto" id="buttons">
                             {% if session["user_id"] %}
-                                <button onclick="location.reload()" class="btn btn-light mt-lg-5">ROLL AGAIN</button>
-                                <br>
-                                <button onclick="location.href='/'" class="btn btn-light mt-lg-5">CHANGE GENRE</button>
-                                <form method="POST">
-                                <button class="btn btn-light mt-lg-5" name="add-book">ADD TO MY LIBRARY</button>
-                                </form>
+                                <div id="logged-in">
+                                    <button onclick="location.reload()" class="btn btn-light">ROLL AGAIN</button>
+                                    <br>
+                                    <button onclick="location.href='/'" class="btn btn-light">CHANGE GENRE</button>
+                                    <form method="post" id="library-form">
+                                        <button id="library-button" class="btn btn-light " name="add-book">ADD TO MY LIBRARY</button>
+                                    </form>
+                                </div>
                             {% else %}
-                                <button onclick="location.reload()" class="btn mt-lg-5">ROLL AGAIN</button>
-                                <button onclick="location.href='/'" class="btn mt-lg-5">CHANGE GENRE</button>
+                                <div id="logged-out">
+                                    <button onclick="location.reload()" class="btn btn-light">ROLL AGAIN</button>
+                                    <button onclick="location.href='/'" class="btn btn-light">CHANGE GENRE</button>
+                                </div>
                             {% endif %}
                         </div>
+                    </div>
+                </div>
+    
+                <!-- Cover page -->
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0"">
+                        <img class="card-body card-img-overlay" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
+                    </div>
+                </div>
+
+                <!-- Description of the book -->
+                <div class="col-md-4 mt-4">
+                    <div class="card mb-3 border-0" id="description">
+                        <h1 class="card-header border-0 lead text-center">DESCRIPTION</h1>
+                        <p class="card-body border-0">{{ book_description }}</p>
                     </div>
                 </div>
             </div>
@@ -151,7 +193,7 @@
 
                 <!-- Amazon link to the papaerback and hardcover versions of the book -->
                 <div class="col-md-3">
-                    <div class="card border-0">
+                    <div class="card border-0 mx-auto">
                         <div id="hard-cover" class="card-body text-center">
                             <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A5&ref=nb_sb_noss" target="_blank">HARD COVER</a></h2>
                         </div>
@@ -160,7 +202,7 @@
 
                 <!-- Amazon link to the e-book version of the book -->
                 <div class="col-md-3">
-                    <div class="card border-0">
+                    <div class="card border-0 mx-auto">
                         <div id="e-book" class="card-body text-center">
                             <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A154606011&ref=nb_sb_noss" target="_blank">E-BOOK</a></h2> 
                         </div>
@@ -169,7 +211,7 @@
 
                 <!-- Amazon link to the audiobook version of the book -->
                 <div class="col-md-3">
-                    <div class="card border-0">
+                    <div class="card border-0 mx-auto">
                         <div id="audiobook" class="card-body text-center">
                             <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_title|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A283155&ref=nb_sb_noss" target="_blank">AUDIOBOOK</a></h2>
                         </div>

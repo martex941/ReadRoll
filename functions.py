@@ -32,3 +32,4 @@ def search_books(query):
         return data
     except requests.RequestException:
         return None
+    

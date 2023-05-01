@@ -49,3 +49,13 @@ window.addEventListener('load', () => {
     window.addEventListener('resize', toggleFixedFooterCSS);
     window.addEventListener('scroll', toggleFixedFooterCSS);
   });
+
+//   AJAX to prevent rolled.html form from refreshing the page
+  // const form = document.getElementById('library-form');
+  // form.addEventListener('click', (event) => {
+  //     event.preventDefault();
+  //     const formData = new FormData(form);
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open('POST', '/rolled/<genre>');
+  //     xhr.send(formData);
+  // });

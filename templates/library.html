@@ -11,18 +11,13 @@
 
   <style>
     .card {
-    height: 205px;
-    width: auto;
-    max-width: 130px;
-    margin-left: -10%;
-    margin-right: -10%;
+      height: 205px;
+      width: 130px;
     }
 
     img.card-body {
-        margin-left: auto;
-        margin-right: auto;
-        height: 160px;
-        width: 123px;
+      height: 160px;
+      width: 123px;
     }
 
     .card-header {
@@ -31,18 +26,69 @@
       margin-bottom: -1rem;
     }
 
+    #search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    }
+  
+    #search-input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 15px 0 0 15px;
+      border: none;
+      outline: none;
+      width: 20%;
+    }
+    
+    #search-button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 0 15px 15px 0;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #header {
+      margin-bottom: 1.5rem;
+    }
+
   </style>
+
+  <form action="{{ url_for('library') }}" method="post" id="search-form">
+    <input type="text" placeholder="Search..." name="search-text" id="search-input">
+    <button type="submit" name="search" id="search-button">Search</button>
+  </form>
 
   <h1 class="lead text-center mt-4" id="header">YOUR LIBRARY</h1>
 
+  <!-- A container for search query -->
+  <div class="container">
+    {% for title in searched_library %}
+      {% if loop.index0 % 8 == 0 %}
+        <div class="row">
+      {% endif %}
+      <div class="card mx-auto mb-4">
+        <h3 class="card-header text-center">{{ title.book_name }}</h3>
+        <img class="card-body" id="book-cover" src="{{ title.book_cover }}" alt="Book cover">
+      </div>
+      {% if loop.index0 % 8 == 7 or loop.last %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- A container for all of the books in the library -->
   <div class="container">
     {% for title in library %}
       {% if loop.index0 % 8 == 0 %}
         <div class="row">
       {% endif %}
       <div class="card mx-auto mb-4">
-        <h3 class="card-header border-0 lead text-center">{{ title.book_name }}</h3>
-        <img class="card-body" src="{{ title.book_cover }}" alt="Book cover">
+        <h3 class="card-header text-center">{{ title.book_name }}</h3>
+        <img class="card-body" id="book-cover" src="{{ title.book_cover }}" alt="Book cover">
       </div>
       {% if loop.index0 % 8 == 7 or loop.last %}
         </div>
