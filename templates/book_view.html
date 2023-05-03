@@ -104,25 +104,25 @@
                 <!-- Basic information about the book -->
                 <div class="col-md-4 mt-4">
                     <div class="card mb-3 border-0" id="book-info">
-                        <h5 class="text-sm-start border-0">Title: {{ book_title }}</h5>
-                        <h5 class="text-sm-start border-0">Authors: {{ book_authors }}</h5>
-                        <h5 class="text-sm-start border-0">Publisher: {{ book_publisher }}</h5>
-                        <h5 class="text-sm-start border-0">Pages: {{ book_pages }}</h5>
-                        <h5 class="text-sm-start border-0">Date: {{ book_date }}</h5>
-                        {% if session["user_id"] %}
-                            <div class="mx-auto" id="logged-in">
-                                <form method="post" id="delete-book">
-                                    <button id="delete-book-button" class="btn btn-light " name="delete-book">DELETE THE BOOK FROM MY LIBRARY</button>
-                                </form>
-                            </div>
-                        {% endif %}
+                        <h5 class="text-sm-start border-0">Title: {{ book_info.book_name }}</h5>
+                        <h5 class="text-sm-start border-0">Authors: {{ book_info.authors }}</h5>
+                        <h5 class="text-sm-start border-0">Genre: {{ book_info.book_genre }}</h5>
+                        <h5 class="text-sm-start border-0">Publisher: {{ book_info.book_publisher }}</h5>
+                        <h5 class="text-sm-start border-0">Pages: {{ book_info.book_pages }}</h5>
+                        <h5 class="text-sm-start border-0">Published year: {{ book_info.published_date }}</h5>
+                        <h5 class="text-sm-start border-0">Added: {{ book_info.date_added }}</h5>
+                        <div class="card-footer d-flex justify-content-end mt-auto mx-auto border-0 mb-4" id="logged-in">
+                            <form method="post" id="delete-book">
+                                <button id="delete-book-button" class="btn btn-light " name="delete-book">DELETE THE BOOK FROM MY LIBRARY</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
     
                 <!-- Cover page -->
                 <div class="col-md-4 mt-4">
                     <div class="card mb-3 border-0"">
-                        <img class="card-body card-img-overlay" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
+                        <img class="card-body card-img-overlay" id="book-cover" src="{{ book_info.book_cover }}" alt="Book cover image">
                     </div>
                 </div>
 
@@ -130,7 +130,7 @@
                 <div class="col-md-4 mt-4">
                     <div class="card mb-3 border-0" id="description">
                         <h1 class="card-header border-0 lead text-center">DESCRIPTION</h1>
-                        <p class="card-body border-0">{{ book_description }}</p>
+                        <p class="card-body border-0">{{ book_info.book_description }}</p>
                     </div>
                 </div>
             </div>

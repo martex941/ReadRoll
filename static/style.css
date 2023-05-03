@@ -156,7 +156,7 @@ footer {
 /* ALERTS */
 #alert-message {
     background-color: aliceblue;
-    width: 15%;
+    width: 350px;
     border-radius: 15px;
     margin-top: 1.5rem;
 }

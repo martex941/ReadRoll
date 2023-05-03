@@ -6,8 +6,13 @@
 -- CREATE TABLE library(
 -- book_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
 -- book_name TEXT NOT NULL, 
--- author TEXT NOT NULL, 
+-- authors TEXT NOT NULL, 
 -- book_cover TEXT NOT NULL, 
+-- published_date TEXT NOT NULL,
+-- book_description TEXT,
+-- book_genre TEXT NOT NULL,
+-- book_publisher TEXT,
+-- book_pages TEXT,
 -- date_added TEXT DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), 
 -- user_id INTEGER NOT NULL, FOREIGN KEY(user_id) REFERENCES users(id));
 
@@ -29,6 +34,7 @@
 -- DELETE FROM users WHERE id=1;
 -- UPDATE users SET id=1 WHERE id=2;
 
+-- DROP TABLE library;
 -- DROP TABLE history;
 
 -- username: ADMIN1 password: admin1

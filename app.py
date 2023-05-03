@@ -3,7 +3,7 @@ import sqlite3
 import random
 
 from functions import login_required, search_books
-from flask import Flask, flash, render_template, redirect, session, request
+from flask import Flask, flash, get_flashed_messages, url_for, render_template, redirect, session, request
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__, static_url_path='/static')
@@ -24,10 +24,24 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/book_view', methods=["GET", "POST"])
+@app.route('/book_view/<book_id>', methods=["GET", "POST"])
 @login_required
-def book_view():
-    return render_template("book_view.html")
+def book_view(book_id):
+    db = sqlite3.connect('readroll.db')
+    db.row_factory = sqlite3.Row
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM library WHERE user_id=? AND book_id=?", (session["user_id"], book_id))
+    book = cursor.fetchall()
+    book_info = [dict(i) for i in book]
+    book_name = book_info[0]["book_name"]
+
+    if request.method == 'POST':
+        cursor.execute("DELETE FROM library WHERE user_id=? AND book_id=?", (session["user_id"], book_id))
+        db.commit()
+        flash(f"{book_name} has been deleted from your library.")
+        return redirect('/library')
+
+    return render_template("book_view.html", book_info=book_info[0])
 
 
 @app.route('/library', methods=["GET", "POST"])
@@ -40,12 +54,12 @@ def library():
     lib = cursor.fetchall()
     library = [dict(i) for i in lib]
 
+    # Search function
     if request.method == 'POST':
         if request.form.get('search-text') == '':
             return render_template('library.html', library=library)
-
         search_query = request.form.get("search-text")
-        cursor.execute("SELECT * FROM library WHERE user_id=? AND book_name LIKE ? OR user_id=? AND author LIKE ?", (session["user_id"], f'%{search_query}%', session["user_id"], f'%{search_query}%'))
+        cursor.execute("SELECT * FROM library WHERE user_id=? AND book_name LIKE ? OR user_id=? AND authors LIKE ?", (session["user_id"], f'%{search_query}%', session["user_id"], f'%{search_query}%'))
         slib = cursor.fetchall()
         searched_library = [dict(i) for i in slib]
         return render_template('library.html', searched_library=searched_library)
@@ -125,13 +139,14 @@ def rolled(genre):
         titles_list = [title[0] for title in titles]
         if request.method == "POST" and 'add-book' in request.form: 
             if book_title not in titles_list:
-                cursor.execute("INSERT INTO library (book_name, author, book_cover, user_id) VALUES (?, ?, ?, ?)", (book_title, book_authors, book_cover, session["user_id"]))
+                cursor.execute("INSERT INTO library (book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (book_title, book_authors, book_cover, book_date, book_description, genre, book_publisher, book_pages, session["user_id"]))
                 db.commit()
                 flash(f"{book_title} has been added to your library.")
+                return redirect('/library')
             else:
                 flash(f"{book_title} is already in your library.")
-            
-    
+
+
     return render_template('rolled.html', genre=genre, book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)
 
 
