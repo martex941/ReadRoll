@@ -91,6 +91,7 @@ def history():
 def rolled(genre):
     # Connect the database
     db = sqlite3.connect('readroll.db')
+    db.row_factory = sqlite3.Row
     cursor = db.cursor()
 
     # Get random book data
@@ -133,18 +134,60 @@ def rolled(genre):
             cursor.execute("INSERT INTO history (book_name, author, user_id) VALUES (?, ?, ?)", (book_title, book_authors, session["user_id"]))
             db.commit()
 
-        # Rolled book is added to the library
+        # Adding the book to the temporary library to then have to possibility to add it to the library, should the user choose to
+        # This method is here to prevent the wrong book being added since the POST method in the form refreshes the webpage
+        # And every time a new page is created, it generates a random book which makes the next book the target for the add to library trigger
+        cursor.execute("SELECT COUNT(*) FROM temp_library WHERE user_id=?", (session["user_id"],))
+        temp_books = cursor.fetchone()[0]
+        cursor.execute("SELECT MIN(temp_id) + 1 FROM temp_library WHERE user_id=?", (session["user_id"],))
+        min_temp_id = cursor.fetchone()[0]
+        if min_temp_id is None:
+            min_temp_id = 1
+
+        if min_temp_id >= 3:
+            min_temp_id = 2
+
+        if temp_books >= 2:
+            cursor.execute("DELETE FROM temp_library WHERE temp_id = (SELECT MIN(temp_id) FROM temp_library)")
+            cursor.execute("UPDATE temp_library SET temp_id = 1 WHERE temp_id = 2 AND user_id = ?", (session["user_id"],))
+            cursor.execute("INSERT INTO temp_library (temp_id, book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (min_temp_id, book_title, book_authors, book_cover, book_date, book_description, genre, book_publisher, book_pages, session["user_id"]))
+            db.commit()
+        else:
+            cursor.execute("INSERT INTO temp_library (temp_id, book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (min_temp_id, book_title, book_authors, book_cover, book_date, book_description, genre, book_publisher, book_pages, session["user_id"]))
+            db.commit()
+        
+        print(temp_books)
+        print(min_temp_id)
+
+        # Rolled book is added to the library using the temporary library
         cursor.execute("SELECT book_name FROM library WHERE user_id=?", (session["user_id"],))
         titles = cursor.fetchall()
         titles_list = [title[0] for title in titles]
         if request.method == "POST" and 'add-book' in request.form: 
-            if book_title not in titles_list:
-                cursor.execute("INSERT INTO library (book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (book_title, book_authors, book_cover, book_date, book_description, genre, book_publisher, book_pages, session["user_id"]))
+            cursor.execute("SELECT book_name FROM temp_library WHERE user_id=? AND temp_id=?", (session["user_id"], 1))
+            title = cursor.fetchone()
+            title = title["book_name"]
+            cursor.execute("SELECT * FROM temp_library WHERE user_id=? AND temp_id=?", (session["user_id"], 1))
+            temp_book = cursor.fetchall()
+            temp_lib = [dict(i) for i in temp_book]
+            print(temp_lib)
+            temp_lib = temp_lib[0]
+            temp_book_title = temp_lib["book_name"]
+            temp_book_authors = temp_lib["authors"]
+            temp_book_cover = temp_lib["book_cover"]
+            temp_book_date = temp_lib["published_date"]
+            temp_book_description = temp_lib["book_description"]
+            temp_book_genre = temp_lib["book_genre"]
+            temp_book_publisher = temp_lib["book_publisher"]
+            temp_book_pages = temp_lib["book_pages"]
+            if title not in titles_list:
+                cursor.execute("INSERT INTO library (book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (temp_book_title, temp_book_authors, temp_book_cover, temp_book_date, temp_book_description, temp_book_genre, temp_book_publisher, temp_book_pages, session["user_id"]))
                 db.commit()
-                flash(f"{book_title} has been added to your library.")
+                flash(f"{temp_book_title} has been added to your library.")
                 return redirect('/library')
             else:
-                flash(f"{book_title} is already in your library.")
+                flash(f"{title} is already in your library.")
+                return render_template('rolled.html', genre=genre, book_title=temp_book_title, book_authors=temp_book_authors, book_description=temp_book_description, book_publisher=temp_book_publisher, book_date=temp_book_date, book_pages=temp_book_pages, book_cover=temp_book_cover)
 
 
     return render_template('rolled.html', genre=genre, book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)

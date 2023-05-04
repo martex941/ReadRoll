@@ -147,7 +147,18 @@
                         </div>
                         <!-- A set of useful buttons -->
                         <div class="card-footer d-flex justify-content-end mt-auto btn-block text-start mx-auto border-0 mb-2" id="buttons">
+                            <!-- If the user is logged in, the "add to library" button will become visible -->
                             {% if session["user_id"] %}
+                                <!-- Ensure that if there is a flash message ("book already in your library" the only message on this page) the add to library button will become hidden -->
+                                {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        <style>
+                                            form, button {
+                                                display: none;
+                                            }
+                                        </style>
+                                    {% endif %}
+                                {% endwith %}
                                 <div id="logged-in">
                                     <button onclick="location.reload()" class="btn btn-light">ROLL AGAIN</button>
                                     <br>
