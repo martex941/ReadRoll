@@ -11,19 +11,21 @@
 
   <style>
     .card {
-      height: 205px;
-      width: 130px;
+      height: 300px;
+      width: 200px;
     }
 
     img.card-body {
-      height: 160px;
-      width: 123px;
+      height: 250px;
+      width: 180px;
     }
 
     .card-header {
       font-size: 15px;
       height: 60px;
       margin-bottom: -1rem;
+      overflow-y: auto;
+      text-overflow: ellipsis;
     }
 
     #search-form {
@@ -54,7 +56,6 @@
     #header {
       margin-bottom: 1.5rem;
     }
-
   </style>
 
   <!-- Flash message if the user decides to add the book to their library -->
@@ -79,8 +80,8 @@
   <!-- A container for search query -->
   <div class="container">
     {% for title in searched_library %}
-      {% if loop.index0 % 7 == 0 %}
-        <div class="row">
+      {% if loop.index0 % 4 == 0 %}
+        <div class="row d-flex justify-content-center">
       {% endif %}
       <div class="card mx-4 mb-4">
         <a href="/book_view/{{ title.book_id }}">
@@ -88,7 +89,7 @@
           <img class="card-body" id="book-cover" src="{{ title.book_cover }}" alt="Book cover">
         </a>
       </div>
-      {% if loop.index0 % 7 == 6 or loop.last %}
+      {% if loop.index0 % 4 == 3 or loop.last %}
         </div>
       {% endif %}
     {% endfor %}
@@ -97,16 +98,18 @@
   <!-- A container for all of the books in the library -->
   <div class="container">
     {% for title in library %}
-      {% if loop.index0 % 7 == 0 %}
-        <div class="row">
+      {% if loop.index0 % 4 == 0 %}
+        <div class="row d-flex justify-content-center">
       {% endif %}
       <div class="card mx-4 mb-4">
         <a href="/book_view/{{ title.book_id }}">
           <h3 class="card-header border-0 text-center">{{ title.book_name }}</h3>
-          <img class="card-body" id="book-cover" src="{{ title.book_cover }}" alt="Book cover">
+          <div class="mx-auto">
+            <img class="card-body" id="book-cover" src="{{ title.book_cover }}" alt="Book cover">
+          </div>
         </a>
       </div>
-      {% if loop.index0 % 7 == 6 or loop.last %}
+      {% if loop.index0 % 4 == 3 or loop.last %}
         </div>
       {% endif %}
     {% endfor %}

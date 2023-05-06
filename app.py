@@ -16,25 +16,34 @@ app.secret_key='admin12345'
 
 @app.route('/')
 def index():
+    """Main page"""
     return render_template('index.html')
 
 
 @app.route('/about')
 def about():
+    """About ReadRoll"""
     return render_template('about.html')
 
 
 @app.route('/book_view/<book_id>', methods=["GET", "POST"])
 @login_required
 def book_view(book_id):
+    """Display a selected book from user's library"""
+    # Connecting to the database
     db = sqlite3.connect('readroll.db')
     db.row_factory = sqlite3.Row
     cursor = db.cursor()
+
+    # Selecting the book to showcase based on book_id value
     cursor.execute("SELECT * FROM library WHERE user_id=? AND book_id=?", (session["user_id"], book_id))
     book = cursor.fetchall()
     book_info = [dict(i) for i in book]
+
+    # Getting the book's name to display it in case the user wants to delete the book
     book_name = book_info[0]["book_name"]
 
+    # Detecting form submission of deletion of the displayed book via the book's unique id in the database
     if request.method == 'POST':
         cursor.execute("DELETE FROM library WHERE user_id=? AND book_id=?", (session["user_id"], book_id))
         db.commit()
@@ -47,17 +56,25 @@ def book_view(book_id):
 @app.route('/library', methods=["GET", "POST"])
 @login_required
 def library():
+    """Display user's library"""
+    # Connecting to the database
     db = sqlite3.connect('readroll.db')
     db.row_factory = sqlite3.Row
     cursor = db.cursor()
+
+    # Selecting everything from the logged user's library
     cursor.execute("SELECT * FROM library WHERE user_id=?", (session["user_id"],))
     lib = cursor.fetchall()
     library = [dict(i) for i in lib]
 
-    # Search function
+    # Search function, if it is not used, the library displays all of the books using the else statement
     if request.method == 'POST':
+
+        # If the search query is empty, display the whole library
         if request.form.get('search-text') == '':
             return render_template('library.html', library=library)
+        
+        # Getting the data using the search query
         search_query = request.form.get("search-text")
         cursor.execute("SELECT * FROM library WHERE user_id=? AND book_name LIKE ? OR user_id=? AND authors LIKE ?", (session["user_id"], f'%{search_query}%', session["user_id"], f'%{search_query}%'))
         slib = cursor.fetchall()
@@ -67,10 +84,11 @@ def library():
         return render_template('library.html', library=library)
 
 
-@app.route("/history")
+@app.route('/history')
 @login_required
 def history():
-    # Connect to the database and create 
+    """ Display user's history"""
+    # Connect to the database
     db = sqlite3.connect('readroll.db')
 
     # Create rows which will help with making a dictionary to put it into a table
@@ -89,6 +107,7 @@ def history():
 
 @app.route('/rolled/<genre>', methods=["GET", "POST"])
 def rolled(genre):
+    """Generate a random book"""
     # Connect the database
     db = sqlite3.connect('readroll.db')
     db.row_factory = sqlite3.Row
@@ -141,14 +160,18 @@ def rolled(genre):
         temp_books = cursor.fetchone()[0]
         cursor.execute("SELECT MIN(temp_id) + 1 FROM temp_library WHERE user_id=?", (session["user_id"],))
         min_temp_id = cursor.fetchone()[0]
+
+        # This ensures that minimum temporary id is never none
         if min_temp_id is None:
             min_temp_id = 1
 
+        # This prevents the temporary id from becoming higher than 3, it combats the autoincrementation of "MIN(temp_id) + 1"
         if min_temp_id >= 3:
             min_temp_id = 2
 
+        # If the amount of books is more than 2, delete the oldest one and shift their place so that there are always 2
         if temp_books >= 2:
-            cursor.execute("DELETE FROM temp_library WHERE temp_id = (SELECT MIN(temp_id) FROM temp_library)")
+            cursor.execute("DELETE FROM temp_library WHERE temp_id = (SELECT MIN(temp_id) FROM temp_library) AND user_id = ?", (session["user_id"],))
             cursor.execute("UPDATE temp_library SET temp_id = 1 WHERE temp_id = 2 AND user_id = ?", (session["user_id"],))
             cursor.execute("INSERT INTO temp_library (temp_id, book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (min_temp_id, book_title, book_authors, book_cover, book_date, book_description, genre, book_publisher, book_pages, session["user_id"]))
             db.commit()
@@ -156,21 +179,23 @@ def rolled(genre):
             cursor.execute("INSERT INTO temp_library (temp_id, book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (min_temp_id, book_title, book_authors, book_cover, book_date, book_description, genre, book_publisher, book_pages, session["user_id"]))
             db.commit()
         
-        print(temp_books)
-        print(min_temp_id)
-
         # Rolled book is added to the library using the temporary library
         cursor.execute("SELECT book_name FROM library WHERE user_id=?", (session["user_id"],))
         titles = cursor.fetchall()
         titles_list = [title[0] for title in titles]
+
+        # Detecting whether the "add to library" button has been clicked via the form submission
         if request.method == "POST" and 'add-book' in request.form: 
+
+            # Getting the title variable to check later whether it is already in the user's library
             cursor.execute("SELECT book_name FROM temp_library WHERE user_id=? AND temp_id=?", (session["user_id"], 1))
             title = cursor.fetchone()
             title = title["book_name"]
+
+            # Getting necessary variables from the temporary library of the logged user
             cursor.execute("SELECT * FROM temp_library WHERE user_id=? AND temp_id=?", (session["user_id"], 1))
             temp_book = cursor.fetchall()
             temp_lib = [dict(i) for i in temp_book]
-            print(temp_lib)
             temp_lib = temp_lib[0]
             temp_book_title = temp_lib["book_name"]
             temp_book_authors = temp_lib["authors"]
@@ -180,6 +205,8 @@ def rolled(genre):
             temp_book_genre = temp_lib["book_genre"]
             temp_book_publisher = temp_lib["book_publisher"]
             temp_book_pages = temp_lib["book_pages"]
+
+            # Checking whether the title is already in user's library and adding it if it is not there
             if title not in titles_list:
                 cursor.execute("INSERT INTO library (book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (temp_book_title, temp_book_authors, temp_book_cover, temp_book_date, temp_book_description, temp_book_genre, temp_book_publisher, temp_book_pages, session["user_id"]))
                 db.commit()
@@ -193,7 +220,7 @@ def rolled(genre):
     return render_template('rolled.html', genre=genre, book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)
 
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route('/register', methods=["GET", "POST"])
 def register():
     """Register user"""
     db = sqlite3.connect('readroll.db')
@@ -250,7 +277,7 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=["GET", "POST"])
 def login():
     """Log user in"""
     conn = sqlite3.connect('readroll.db')
@@ -291,7 +318,7 @@ def login():
     else:
         return render_template("login.html")
 
-@app.route("/logout")
+@app.route('/logout')
 @login_required
 def logout():
     """Log user out"""

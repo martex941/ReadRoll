@@ -160,7 +160,7 @@
                                     {% endif %}
                                 {% endwith %}
                                 <div id="logged-in">
-                                    <button onclick="location.reload()" class="btn btn-light">ROLL AGAIN</button>
+                                    <button onclick="location.href='/rolled/{{ genre }}'" class="btn btn-light">ROLL AGAIN</button>
                                     <br>
                                     <button onclick="location.href='/'" class="btn btn-light">CHANGE GENRE</button>
                                     <form method="post" id="library-form">

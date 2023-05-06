@@ -50,7 +50,9 @@
 -- DROP TABLE library;
 -- DROP TABLE history;
 
--- username: ADMIN1 password: admin1
+-- ADMIN1, admin1
+-- ADMIN2, admin12345
+-- ADMIN3, admin333
 
 -- DELETE FROM library WHERE book_id < 20;
 
