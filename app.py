@@ -155,7 +155,7 @@ def rolled(genre):
         cursor.execute("SELECT position_id FROM history WHERE user_id=?", (session["user_id"],))
         positions = cursor.fetchall()
         if len(positions) > 50:
-            cursor.execute("DELETE FROM history WHERE position_id=?", positions[0])
+            cursor.execute("DELETE FROM history WHERE position_id=? and user_id=?", (positions[0], session["user_id"]))
             cursor.execute("INSERT INTO history (book_name, author, user_id) VALUES (?, ?, ?)", (book_title, book_authors, session["user_id"]))
             db.commit()
         else:
@@ -220,7 +220,13 @@ def rolled(genre):
                 cursor.execute("INSERT INTO library (book_name, authors, book_cover, published_date, book_description, book_genre, book_publisher, book_pages, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (temp_book_title, temp_book_authors, temp_book_cover, temp_book_date, temp_book_description, temp_book_genre, temp_book_publisher, temp_book_pages, session["user_id"]))
                 db.commit()
                 flash(f"{temp_book_title} has been added to your library.")
+
+                # This prevents another book being added to the history table as the page refreshes following the POST form submission
+                cursor.execute("DELETE FROM history WHERE position_id=(SELECT MAX(position_id) FROM history) AND user_id=?", (session["user_id"],))
+                db.commit()
+
                 return redirect('/library')
+            
             else:
                 flash(f"{title} is already in your library.")
                 return render_template('rolled.html', genre=genre, book_title=temp_book_title, book_authors=temp_book_authors, book_description=temp_book_description, book_publisher=temp_book_publisher, book_date=temp_book_date, book_pages=temp_book_pages, book_cover=temp_book_cover)
@@ -315,6 +321,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(results) != 1 or not check_password_hash(results[0]["password"], request.form.get("password")):
+            flash("User does not exist.")
             return render_template("login.html")
 
         # Remember which user has logged in

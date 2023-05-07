@@ -22,6 +22,7 @@
     --text-color: #f1dac4ff;
 }
 
+
 /* THEME SWITCH BUTTON */
 .theme-switch button {
     display: inline-block;
@@ -55,6 +56,7 @@
     background-color: #f8f8f8;
     border-radius: 10px;
 }
+
 
 /* General theme colors */
 main, body {
@@ -90,6 +92,7 @@ tr, td, button, .btn {
     background: transparent;
 }
 
+
 /* NAVBAR */
 .navbar-toggler-icon {
     width: auto;
@@ -99,7 +102,7 @@ tr, td, button, .btn {
 
 .navbar-toggler-icon::before {
     content: "\2630" !important;
-  }
+}
 
 @media (max-width: 991px) {
     .nav-link {
@@ -107,7 +110,7 @@ tr, td, button, .btn {
     }
     .theme-switch {
         justify-content: left;
-    }
+    } 
 }
 
 @media (max-width: 1199px), (max-width: 1399px) {
@@ -127,6 +130,14 @@ tr, td, button, .btn {
 .nav-item #login {
     margin-right: 1rem;
 }
+
+@media (max-width: 991px) {
+    .nav-item #login {
+        margin-right: -0.2rem;
+    }
+
+}
+
 
 /* FOOTER */
 footer p {
@@ -152,6 +163,7 @@ footer {
         width:255px;
     }
 }
+
 
 /* ALERTS */
 #alert-message {

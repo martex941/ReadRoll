@@ -36,11 +36,15 @@
 -- user_id INTEGER NOT NULL, 
 -- FOREIGN KEY(user_id) REFERENCES users(id));
 
--- ADMIN1, admin1
--- ADMIN2, admin12345
--- ADMIN3, admin333
+-- Acc for testing
+-- ADMIN1, admin111
 
--- DROP TRIGGER limit_books;
+
+-- DROP TABLE temp_library;
+-- DROP TABLE users;
+-- DROP TABLE library;
+-- DROP TABLE history;
+
 
 SELECT * FROM temp_library;
 SELECT * FROM users;

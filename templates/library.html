@@ -56,6 +56,11 @@
     #header {
       margin-bottom: 1.5rem;
     }
+
+    #library-card a {
+      text-decoration: none;
+    }
+    
   </style>
 
   <!-- Flash message if the user decides to add the book to their library -->
@@ -87,7 +92,7 @@
         <div class="row d-flex justify-content-center">
       {% endif %}
 
-      <div class="card mx-4 mb-4">
+      <div class="card mx-4 mb-4" id="library-card">
         <a href="/book_view/{{ title.book_id }}">
           <h3 class="card-header border-0 text-center">{{ title.book_name }}</h3>
           <img class="card-body" id="book-cover" src="{{ title.book_cover }}" alt="Book cover">
@@ -111,7 +116,7 @@
         <div class="row d-flex justify-content-center">
       {% endif %}
 
-      <div class="card mx-4 mb-4">
+      <div class="card mx-4 mb-4" id="library-card">
         <a href="/book_view/{{ title.book_id }}">
           <h3 class="card-header border-0 text-center">{{ title.book_name }}</h3>
           <div class="mx-auto">
