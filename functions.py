@@ -23,7 +23,7 @@ def login_required(f):
 
 def search_books(query):
     try:
-        api_key = "AIzaSyAjyEIryt6W4DYRj8T_9SerZL7LuExUiTM"
+        api_key = os.environ.get("API_KEY")
         page_size = 10
         random_start_index = random.randint(0, page_size)
         url = f'https://www.googleapis.com/books/v1/volumes?q=subject:{query}&startIndex={random_start_index}&maxResults={page_size}&langRestrict=en&country=US&key={api_key}'

@@ -10,30 +10,33 @@
   <!-- <link id="fixed-footer" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_fixed_footer.css') }}"> This is so that the footer always stays at the bottom of the page -->
 
   <style>
-    .row {
-      margin-right: 15%;
-      margin-left: 15%;
-    }
-
     .card {
-      height: 205px;
+      height: 225px;
       width: auto;
-      max-width: 130px;
+      max-width: 140px;
+      margin-left: 1rem;
+      margin-right: 1rem;
     }
 
     img.card-body {
-      margin-left: auto;
+      margin-left: -0.3rem;
       margin-right: auto;
-      height: 160px;
-      width: 123px;
+      height: 170px;
+      width: 127px;
     }
 
     .card-header {
       font-size: 15px;
       height: 60px;
-      margin-bottom: -1rem;
+      margin-bottom: -0.5rem;
+      margin-left: -0.8rem;
+      width: 140px;
     }
 
+    #book-rows a {
+      text-decoration: none;
+    }
+    
   </style>
 
 
@@ -42,222 +45,204 @@
       <h1 class="lead text-center">Choose your genre and get a random book recommendation</h1>
     </div>
   </header>
-
+  <!-- Container for cards(book genres) -->
   <div class="container" id="book-rows">
-    <div class="row">
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+    <div class="row mt-4 mb-4 d-flex justify-content-center">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Arts & Photography">
           <h3 class="card-header border-0 lead text-center">Arts & Photography</h3>
-          <a class="mx-auto" href="/rolled/Arts & Photography">
-            <img class="card-body" src="http://wintergoosepublishing.com/wp-content/uploads/2011/05/ArtPlatform-BookCover-Final-Flat.jpg" alt="Arts & Photography">
-          </a>
-        </div>
+          <img class="card-body" src="http://wintergoosepublishing.com/wp-content/uploads/2011/05/ArtPlatform-BookCover-Final-Flat.jpg" alt="Arts & Photography">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Biographies & Memoirs">
           <h3 class="card-header border-0 lead text-center">Biographies & Memoirs</h3>
-          <a class="mx-auto" href="/rolled/Biographies & Memoirs">
-            <img class="card-body" src="https://d28hgpri8am2if.cloudfront.net/book_images/cvr9781847399328_9781847399328_hr.jpg" alt="Biographies & Memoirs">
-          </a>
-        </div>
+          <img class="card-body" src="https://d28hgpri8am2if.cloudfront.net/book_images/cvr9781847399328_9781847399328_hr.jpg" alt="Biographies & Memoirs">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Business & Investing">
           <h3 class="card-header border-0 lead text-center">Business & Investing</h3>
-          <a class="mx-auto" href="/rolled/Business & Investing">
-            <img class="card-body" src="https://ww1.prweb.com/prfiles/2007/03/15/512026/BusinessInnovationbookcover.jpg" alt="Business & Investing">
-          </a>
-        </div>
+          <img class="card-body" src="https://ww1.prweb.com/prfiles/2007/03/15/512026/BusinessInnovationbookcover.jpg" alt="Business & Investing">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Children's Books">
           <h3 class="card-header border-0 lead text-center">Children's Books</h3>
-          <a class="mx-auto" href="/rolled/Children's Books">
-            <img class="card-body" src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/07/attachment_78895234.png?auto=format&q=60&fit=max&w=930" alt="Children's Books">
-          </a>
-        </div>
+          <img class="card-body" src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/07/attachment_78895234.png?auto=format&q=60&fit=max&w=930" alt="Children's Books">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Comics & Graphic Novels">
           <h3 class="card-header border-0 lead text-center">Comics & Graphic Novels</h3>
-          <a class="mx-auto" href="/rolled/Comics & Graphic Novels">
-            <img class="card-body" src="http://www.brooklyncomicshop.com/BCS/wp-content/uploads/2019/02/Action-Comics-419-Brooklyn-Comic-Shop.jpg.jpeg" alt="Comics & Graphic Novels">
-          </a>
-        </div>
+          <img class="card-body" src="http://www.brooklyncomicshop.com/BCS/wp-content/uploads/2019/02/Action-Comics-419-Brooklyn-Comic-Shop.jpg.jpeg" alt="Comics & Graphic Novels">
+        </a>
       </div>
+
     </div>
 
-    <div class="row mt-4 mb-4">
-      <div class="col">
-        <div class="card border-0 mt-4">
+    <div class="row mt-4 mb-4 d-flex justify-content-center">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Computers & Technology">
           <h3 class="card-header border-0 lead text-center">Computers & Technology</h3>
-          <a class="mx-auto" href="/rolled/Computers & Technology">
-            <img class="card-body" src="https://images.gr-assets.com/books/1348061701l/6576999.jpg" alt="Computers & Technology">
-          </a>
-        </div>
+          <img class="card-body" src="https://images.gr-assets.com/books/1348061701l/6576999.jpg" alt="Computers & Technology">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Cookbooks, Food & Wine">
           <h3 class="card-header border-0 lead text-center">Cookbooks, Food & Wine</h3>
-          <a class="mx-auto" href="/rolled/Cookbooks, Food & Wine">
-            <img class="card-body" src="https://i.pinimg.com/originals/6e/e4/df/6ee4df66a88202cb29bc652c118937d1.jpg" alt="Cookbooks, Food & Wine">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/originals/6e/e4/df/6ee4df66a88202cb29bc652c118937d1.jpg" alt="Cookbooks, Food & Wine">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Education & Reference">
           <h3 class="card-header border-0 lead text-center">Education & Reference</h3>
-          <a class="mx-auto" href="/rolled/Education & Reference">
-            <img class="card-body" src="https://booksrun.com/image-loader/350/https:__m.media-amazon.com_images_I_41t6RagGj5L.jpg" alt="Education & Reference">
-          </a>
-        </div>
+          <img class="card-body" src="https://booksrun.com/image-loader/350/https:__m.media-amazon.com_images_I_41t6RagGj5L.jpg" alt="Education & Reference">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Entertainment">
           <h3 class="card-header border-0 lead text-center">Entertainment</h3>
-          <a class="mx-auto" href="/rolled/Entertainment">
-            <img class="card-body" src="https://i0.wp.com/www.nerdsandbeyond.com/wp-content/uploads/2020/08/m4.jpeg?fit=1333%2C2000&ssl=1" alt="Entertainment">
-          </a>
-        </div>
+          <img class="card-body" src="https://i0.wp.com/www.nerdsandbeyond.com/wp-content/uploads/2020/08/m4.jpeg?fit=1333%2C2000&ssl=1" alt="Entertainment">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Health, Mind & Body">
           <h3 class="card-header border-0 lead text-center">Health, Mind & Body</h3>
-          <a class="mx-auto" href="/rolled/Health, Mind & Body">
-            <img class="card-body" src="https://i.pinimg.com/736x/f2/cd/b6/f2cdb6cc7237edb99154ab0497dd6e96.jpg" alt="Health, Mind & Body">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/736x/f2/cd/b6/f2cdb6cc7237edb99154ab0497dd6e96.jpg" alt="Health, Mind & Body">
+        </a>
       </div>
+
     </div>
 
-    <div class="row mt-4 mb-4">
-      <div class="col">
-        <div class="card border-0 mt-4">
+    <div class="row mt-4 mb-4 d-flex justify-content-center">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/History">
           <h3 class="card-header border-0 lead text-center">History</h3>
-          <a class="mx-auto" href="/rolled/History">
-            <img class="card-body" src="https://i.pinimg.com/originals/56/b5/12/56b512b4460c78b5cfe769da2b8e85f8.jpg" alt="History">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/originals/56/b5/12/56b512b4460c78b5cfe769da2b8e85f8.jpg" alt="History">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Home & Garden">
           <h3 class="card-header border-0 lead text-center">Home & Garden</h3>
-          <a class="mx-auto" href="/rolled/Home & Garden">
-            <img class="card-body" src="https://i.pinimg.com/originals/79/90/fe/7990fef5aa756adddabeb1fa82934aed.jpg" alt="Home & Garden">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/originals/79/90/fe/7990fef5aa756adddabeb1fa82934aed.jpg" alt="Home & Garden">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Horror">
           <h3 class="card-header border-0 lead text-center">Horror</h3>
-          <a class="mx-auto" href="/rolled/Horror">
-            <img class="card-body" src="https://miblart.com/wp-content/uploads/2020/10/Dean_Rasmussen_ebook-scaled.jpg" alt="Horror">
-          </a>
-        </div>
+          <img class="card-body" src="https://miblart.com/wp-content/uploads/2020/10/Dean_Rasmussen_ebook-scaled.jpg" alt="Horror">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Literature & Fiction">
           <h3 class="card-header border-0 lead text-center">Literature & Fiction</h3>
-          <a class="mx-auto" href="/rolled/Literature & Fiction">
-            <img class="card-body" src="https://www.rockingbookcovers.com/wp-content/uploads/2013/01/rooms.jpg" alt="Literature & Fiction">
-          </a>
-        </div>
+          <img class="card-body" src="https://www.rockingbookcovers.com/wp-content/uploads/2013/01/rooms.jpg" alt="Literature & Fiction">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Mystery & Thrillers">
           <h3 class="card-header border-0 lead text-center">Mystery & Thrillers</h3>
-          <a class="mx-auto" href="/rolled/Mystery & Thrillers">
-            <img class="card-body" src="https://i.pinimg.com/originals/90/f9/1c/90f91c45841faacc4815ee80a517b612.jpg" alt="Mystery & Thrillers">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/originals/90/f9/1c/90f91c45841faacc4815ee80a517b612.jpg" alt="Mystery & Thrillers">
+        </a>
       </div>
+
     </div>
 
-    <div class="row mt-4 mb-4">
-      <div class="col">
-        <div class="card border-0 mt-4">
+    <div class="row mt-4 mb-4 d-flex justify-content-center">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Nonfiction">
           <h3 class="card-header border-0 lead text-center">Nonfiction</h3>
-          <a class="mx-auto" href="/rolled/Nonfiction">
-            <img class="card-body" src="https://dfb503wu29eo2.cloudfront.net/slir/h1200/png24-front/bookcover0011182.jpg" alt="Nonfiction">
-          </a>
-        </div>
+          <img class="card-body" src="https://dfb503wu29eo2.cloudfront.net/slir/h1200/png24-front/bookcover0011182.jpg" alt="Nonfiction">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Outdoors & Nature">
           <h3 class="card-header border-0 lead text-center">Outdoors & Nature</h3>
-          <a class="mx-auto" href="/rolled/Outdoors & Nature">
-            <img class="card-body" src="https://backyardsfornature.org/wp-content/uploads/2014/09/Living-Landscape-Book-Cover.jpg" alt="Outdoors & Nature">
-          </a>
-        </div>
+          <img class="card-body" src="https://backyardsfornature.org/wp-content/uploads/2014/09/Living-Landscape-Book-Cover.jpg" alt="Outdoors & Nature">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Parenting & Families">
           <h3 class="card-header border-0 lead text-center">Parenting & Families</h3>
-          <a class="mx-auto" href="/rolled/Parenting & Families">
-            <img class="card-body" src="https://i.pinimg.com/originals/02/f3/fb/02f3fb6915251a718a1b648f8a019ad3.jpg" alt="Parenting & Families">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/originals/02/f3/fb/02f3fb6915251a718a1b648f8a019ad3.jpg" alt="Parenting & Families">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Politics & Current Events">
           <h3 class="card-header border-0 lead text-center">Politics & Current Events</h3>
-          <a class="mx-auto" href="/rolled/Politics & Current Events">
-            <img class="card-body" src="https://www.e-ir.info/wp-content/uploads/2017/05/Marples-cover-1.jpg" alt="Politics & Current Events">
-          </a>
-        </div>
+          <img class="card-body" src="https://www.e-ir.info/wp-content/uploads/2017/05/Marples-cover-1.jpg" alt="Politics & Current Events">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Professional & Technical">
           <h3 class="card-header border-0 lead text-center">Professional & Technical</h3>
-          <a class="mx-auto" href="/rolled/Professional & Technical">
-            <img class="card-body" src="https://www.cofs.uwa.edu.au/__data/assets/image/0019/2210743/OGE-cover-image.jpg" alt="Professional & Technical">
-          </a>
-        </div>
+          <img class="card-body" src="https://www.cofs.uwa.edu.au/__data/assets/image/0019/2210743/OGE-cover-image.jpg" alt="Professional & Technical">
+        </a>
       </div>
+
     </div>
 
-    <div class="row mt-4 mb-4">
-      <div class="col">
-        <div class="card border-0 mt-4">
+    <div class="row mt-4 mb-4 d-flex justify-content-center">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Romance">
           <h3 class="card-header border-0 lead text-center">Romance</h3>
-          <a class="mx-auto" href="/rolled/Romance">
-            <img class="card-body" src="https://i.pinimg.com/originals/b5/e1/d9/b5e1d9f69534ade582de4c8ab24f371c.jpg" alt="Romance">
-          </a>
-        </div>
+          <img class="card-body" src="https://i.pinimg.com/originals/b5/e1/d9/b5e1d9f69534ade582de4c8ab24f371c.jpg" alt="Romance">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Science Fiction & Fantasy">
           <h3 class="card-header border-0 lead text-center">Science Fiction & Fantasy</h3>
-          <a class="mx-auto" href="/rolled/Science Fiction & Fantasy">
-            <img class="card-body" src="https://static0.colliderimages.com/wordpress/wp-content/uploads/2016/07/the-lord-of-the-rings-book-cover.jpg" alt="Science Fiction & Fantasy">
-          </a>
-        </div>
+          <img class="card-body" src="https://static0.colliderimages.com/wordpress/wp-content/uploads/2016/07/the-lord-of-the-rings-book-cover.jpg" alt="Science Fiction & Fantasy">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Sports">
           <h3 class="card-header border-0 lead text-center">Sports</h3>
-          <a class="mx-auto" href="/rolled/Sports">
-            <img class="card-body" src="https://www.silive.com/resizer/doKL7aqyw9cbuk8eXPZo7LQt8jo=/450x0/smart/advancelocal-adapter-image-uploads.s3.amazonaws.com/image.silive.com/home/silive-media/width600/img/sportsstories/photo/book-cover-high-resjpg-148353457b3a5180.jpg" alt="Sports">
-          </a>
-        </div>
+          <img class="card-body" src="https://www.silive.com/resizer/doKL7aqyw9cbuk8eXPZo7LQt8jo=/450x0/smart/advancelocal-adapter-image-uploads.s3.amazonaws.com/image.silive.com/home/silive-media/width600/img/sportsstories/photo/book-cover-high-resjpg-148353457b3a5180.jpg" alt="Sports">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Teens">
           <h3 class="card-header border-0 lead text-center">Teens</h3>
-          <a class="mx-auto" href="/rolled/Teens">
-            <img class="card-body" src="https://dfb503wu29eo2.cloudfront.net/slir/h1200/png24-front/bookcover0003726.jpg" alt="Teens">
-          </a>
-        </div>
+          <img class="card-body" src="https://dfb503wu29eo2.cloudfront.net/slir/h1200/png24-front/bookcover0003726.jpg" alt="Teens">
+        </a>
       </div>
-      <div class="col">
-        <div class="card border-0 mt-4">
+
+      <div class="card border-0 mt-4">
+        <a class="mx-auto" href="/rolled/Travel">
           <h3 class="card-header border-0 lead text-center">Travel</h3>
-          <a class="mx-auto" href="/rolled/Travel">
-            <img class="card-body" src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781481459921/road-trip-summer-9781481459921_hr.jpg" alt="Travel">
-          </a>
-        </div>
+          <img class="card-body" src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781481459921/road-trip-summer-9781481459921_hr.jpg" alt="Travel">
+        </a>
       </div>
+
     </div>
+
   </div>
 
 {% endblock %}

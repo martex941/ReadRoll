@@ -16,8 +16,6 @@
 -- date_added TEXT DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), 
 -- user_id INTEGER NOT NULL, FOREIGN KEY(user_id) REFERENCES users(id));
 
--- DROP TABLE temp_library;
-
 -- CREATE TABLE temp_library(
 -- temp_id INTEGER, 
 -- book_name TEXT NOT NULL, 
@@ -31,30 +29,16 @@
 -- user_id INTEGER NOT NULL, FOREIGN KEY(user_id) REFERENCES users(id));
 
 -- CREATE TABLE history (
---   position_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
---   book_name TEXT NOT NULL, 
---   author TEXT NOT NULL, 
---   date_added TEXT DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), 
---   user_id INTEGER NOT NULL, 
---   FOREIGN KEY(user_id) REFERENCES users(id));
-
--- INSERT INTO users(username, password)
--- VALUES ("ADMIN", "admin123");
-
--- INSERT INTO library(book_name, author, book_cover, user_id) VALUES ("Test book", "Me", "https://johannatarkela.com/wp-content/uploads/2020/05/BookCover1.jpg", 1);
--- DROP TABLE library;
-
--- DELETE FROM users WHERE id=1;
--- UPDATE users SET id=1 WHERE id=2;
-
--- DROP TABLE library;
--- DROP TABLE history;
+-- position_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+-- book_name TEXT NOT NULL, 
+-- author TEXT NOT NULL, 
+-- date_added TEXT DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), 
+-- user_id INTEGER NOT NULL, 
+-- FOREIGN KEY(user_id) REFERENCES users(id));
 
 -- ADMIN1, admin1
 -- ADMIN2, admin12345
 -- ADMIN3, admin333
-
--- DELETE FROM library WHERE book_id < 20;
 
 -- DROP TRIGGER limit_books;
 

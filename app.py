@@ -4,32 +4,41 @@ import random
 
 from functions import login_required, search_books
 from flask import Flask, flash, get_flashed_messages, url_for, render_template, redirect, session, request
+from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
+# Connect to the static folder containing css and js files
 app = Flask(__name__, static_url_path='/static')
 
-db = sqlite3.connect('readroll.db')
-cursor = db.cursor()
+# Configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
+# Secret key to use flash messages
 app.secret_key='admin12345'
 
+# Make sure API key is set
+if not os.environ.get("API_KEY"):
+    raise RuntimeError("API_KEY not set")
 
+
+# Main page
 @app.route('/')
 def index():
-    """Main page"""
     return render_template('index.html')
 
 
+# About ReadRoll
 @app.route('/about')
 def about():
-    """About ReadRoll"""
     return render_template('about.html')
 
 
+# Display a selected book from user's library
 @app.route('/book_view/<book_id>', methods=["GET", "POST"])
 @login_required
 def book_view(book_id):
-    """Display a selected book from user's library"""
     # Connecting to the database
     db = sqlite3.connect('readroll.db')
     db.row_factory = sqlite3.Row
@@ -53,10 +62,10 @@ def book_view(book_id):
     return render_template("book_view.html", book_info=book_info[0])
 
 
+# Display user's library
 @app.route('/library', methods=["GET", "POST"])
 @login_required
 def library():
-    """Display user's library"""
     # Connecting to the database
     db = sqlite3.connect('readroll.db')
     db.row_factory = sqlite3.Row
@@ -84,10 +93,10 @@ def library():
         return render_template('library.html', library=library)
 
 
+# Display user's history
 @app.route('/history')
 @login_required
 def history():
-    """ Display user's history"""
     # Connect to the database
     db = sqlite3.connect('readroll.db')
 
@@ -105,9 +114,9 @@ def history():
     return render_template('history.html', history=history)
 
 
+# Generate a random book
 @app.route('/rolled/<genre>', methods=["GET", "POST"])
 def rolled(genre):
-    """Generate a random book"""
     # Connect the database
     db = sqlite3.connect('readroll.db')
     db.row_factory = sqlite3.Row
@@ -140,7 +149,7 @@ def rolled(genre):
     else:
         book_cover = random_book['imageLinks'].get('thumbnail', 'https://www.lse.ac.uk/International-History/Images/Books/NoBookCover.png')
 
-    # If the user is logged in add the roll to their history and let them add a title to their library
+    # If the user is logged in add the roll to their history and let them add a title to their library and save rolled books into their history
     if session.get("user_id"):
         # If there are more than 50 titles in the user's history, delete the first one to make space for the new title, if the history isn't full, just add the new title
         cursor.execute("SELECT position_id FROM history WHERE user_id=?", (session["user_id"],))
@@ -153,15 +162,15 @@ def rolled(genre):
             cursor.execute("INSERT INTO history (book_name, author, user_id) VALUES (?, ?, ?)", (book_title, book_authors, session["user_id"]))
             db.commit()
 
-        # Adding the book to the temporary library to then have to possibility to add it to the library, should the user choose to
+        # Adding the book to the temporary library to then have to possibility to add it to the library if the user decides to do it
         # This method is here to prevent the wrong book being added since the POST method in the form refreshes the webpage
-        # And every time a new page is created, it generates a random book which makes the next book the target for the add to library trigger
+        # Every time a new page is created, it generates a random book which makes the next book the target for the add to library trigger
         cursor.execute("SELECT COUNT(*) FROM temp_library WHERE user_id=?", (session["user_id"],))
         temp_books = cursor.fetchone()[0]
         cursor.execute("SELECT MIN(temp_id) + 1 FROM temp_library WHERE user_id=?", (session["user_id"],))
         min_temp_id = cursor.fetchone()[0]
 
-        # This ensures that minimum temporary id is never none
+        # This ensures that minimum temporary id is never None
         if min_temp_id is None:
             min_temp_id = 1
 
@@ -220,9 +229,9 @@ def rolled(genre):
     return render_template('rolled.html', genre=genre, book_title=book_title, book_authors=book_authors, book_description=book_description, book_publisher=book_publisher, book_date=book_date, book_pages=book_pages, book_cover=book_cover)
 
 
+# Register user
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    """Register user"""
     db = sqlite3.connect('readroll.db')
     cursor = db.cursor()
 
@@ -277,9 +286,9 @@ def register():
     else:
         return render_template("register.html")
 
+# Log user in
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    """Log user in"""
     conn = sqlite3.connect('readroll.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -318,10 +327,10 @@ def login():
     else:
         return render_template("login.html")
 
+# Log user out
 @app.route('/logout')
 @login_required
 def logout():
-    """Log user out"""
 
     # Forget any user_id
     session.clear()

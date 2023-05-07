@@ -72,9 +72,18 @@
                 justify-content: center;
                 align-items: center;
             }
+
+            #about-book .card {
+                width: auto;
+            }
+
+            #about-book .col-md-4 {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
         }
 
-        @media (max-width: 991px) {
+        @media (min-width: 768px) and (max-width: 991px) {
             /* ABOUT THE BOOK SECTION */
             #about-book .card {
                 width: 240px;
@@ -99,6 +108,7 @@
 
         <!-- This contains the description, book cover and book information cards -->
         <div class="container" id="about-book">
+            
             <div class="row">
 
                 <!-- Basic information about the book -->
@@ -111,11 +121,13 @@
                         <h5 class="text-sm-start border-0">Pages: {{ book_info.book_pages }}</h5>
                         <h5 class="text-sm-start border-0">Published year: {{ book_info.published_date }}</h5>
                         <h5 class="text-sm-start border-0">Added: {{ book_info.date_added }}</h5>
+
                         <div class="card-footer d-flex justify-content-end mt-auto mx-auto border-0 mb-4" id="logged-in">
                             <form method="post" id="delete-book">
                                 <button id="delete-book-button" class="btn btn-light " name="delete-book">DELETE THE BOOK FROM MY LIBRARY</button>
                             </form>
                         </div>
+
                     </div>
                 </div>
     
@@ -133,6 +145,7 @@
                         <p class="card-body border-0">{{ book_info.book_description }}</p>
                     </div>
                 </div>
+
             </div>
         </div>     
     </div>

@@ -124,7 +124,7 @@ tr, td, button, .btn {
     margin-left: 1rem;
 }
 
-nav ul #login {
+.nav-item #login {
     margin-right: 1rem;
 }
 

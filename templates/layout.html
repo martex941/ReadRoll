@@ -22,26 +22,26 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         {% if session["user_id"] %}
           <ul class="navbar-nav me-auto" id="left-nav">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/library"">Library</a></li>
-            <li class="nav-item"><a class="nav-link" href="/history"">History</a></li>
-          </ul>
-          <ul class="navbar-nav ms-auto" id="right-nav">
-            <div class="theme-switch">
-              <button onclick=toggleSwitch()>Toggle dark mode</button>
-            </div>
-            <li class="nav-item"><a class="nav-link" id="login" href="/logout">Log out</a></li>
-          </ul>
-        {% else %}
-          <ul class="navbar-nav me-auto" id="left-nav">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item mx-auto"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item mx-auto"><a class="nav-link" href="/library"">Library</a></li>
+            <li class="nav-item mx-auto"><a class="nav-link" href="/history"">History</a></li>
           </ul>
           <ul class="navbar-nav ms-auto" id="right-nav">
             <div class="theme-switch mx-auto">
               <button onclick=toggleSwitch()>Toggle dark mode</button>
             </div>
-            <li class="nav-item"><a class="nav-link" id="register" href="/register">Register</a></li>
-            <li class="nav-item"><a class="nav-link" id="login" href="/login">Log in</a></li>
+            <li class="nav-item mx-auto"><a class="nav-link" id="login" href="/logout">Log out</a></li>
+          </ul>
+        {% else %}
+          <ul class="navbar-nav me-auto" id="left-nav">
+            <li class="nav-item mx-auto"><a class="nav-link" href="/">Home</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto" id="right-nav">
+            <div class="theme-switch mx-auto">
+              <button onclick=toggleSwitch()>Toggle dark mode</button>
+            </div>
+            <li class="nav-item mx-auto"><a class="nav-link" id="register" href="/register">Register</a></li>
+            <li class="nav-item mx-auto"><a class="nav-link" id="login" href="/login">Log in</a></li>
           </ul>
         {% endif %}
       </div>

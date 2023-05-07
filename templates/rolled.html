@@ -82,7 +82,7 @@
             }
         }
 
-        @media (max-width: 991px) {
+        @media (min-width: 768px) and (max-width: 991px) {
             /* BUY SECTION */
             #buy-section {
                 margin-bottom: -1rem;
@@ -99,18 +99,26 @@
 
             /* ABOUT THE BOOK SECTION */
             #about-book .card {
-                width: 240px;
+                width: 260px;
+            }
+
+            #about-book .row {
+                display: flex;
+                justify-content: center;
             }
 
             #about-book .col-md-4 {
                 width: auto;
-                margin-left: -1rem;
-                margin-right: -1rem;
             }
 
             #about-book #book-cover {
                 max-width: fit-content;
-                max-height: 300px;
+                max-height: 400px;
+            }
+
+            #description.card {
+                width: 442px;
+                margin-left:auto
             }
         }
 
@@ -125,12 +133,14 @@
                 margin: -0.5rem;
             }
         }
+
     </style>
 
     <!-- Container for the whole content in main -->
-    <div class="container">
+    <div class="container" id="main-container">
 
         <h1 class="lead text-center mt-4">{{ genre }}</h1>
+        
         <!-- This contains the description, book cover and book information cards -->
         <div class="container" id="about-book">
             <div class="row" id="row1">
@@ -145,6 +155,7 @@
                             <h5 class="text-sm-start border-0">Pages: {{ book_pages }}</h5>
                             <h5 class="text-sm-start border-0">Date: {{ book_date }}</h5>
                         </div>
+                        
                         <!-- A set of useful buttons -->
                         <div class="card-footer d-flex justify-content-end mt-auto btn-block text-start mx-auto border-0 mb-2" id="buttons">
                             <!-- If the user is logged in, the "add to library" button will become visible -->
@@ -174,12 +185,13 @@
                                 </div>
                             {% endif %}
                         </div>
+
                     </div>
                 </div>
     
                 <!-- Cover page -->
                 <div class="col-md-4 mt-4">
-                    <div class="card mb-3 border-0"">
+                    <div class="card border-0"">
                         <img class="card-body card-img-overlay" id="book-cover" src="{{ book_cover }}" alt="Book cover image">
                     </div>
                 </div>
@@ -191,6 +203,7 @@
                         <p class="card-body border-0">{{ book_description }}</p>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -228,18 +241,19 @@
 
             </div>
         </div>
+
     </div>
 
     <!-- Flash message if the user decides to add the book to their library -->
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
+        {% if messages %}
             {% for message in messages %}
-            <div id="alert-message" class=" container alert alert-{type} alert-dismissible fade show" role="alert" role="alert">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <h5 class="text-center">{{ message }}</h5>
-            </div>
+                <div id="alert-message" class=" container alert alert-{type} alert-dismissible fade show" role="alert" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <h5 class="text-center">{{ message }}</h5>
+                </div>
             {% endfor %}
-    {% endif %}
+        {% endif %}
     {% endwith %}
     
 {% endblock %}
