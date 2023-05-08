@@ -34,10 +34,14 @@
             width: 175px;
         }
 
-        #description .card-body {
+        #description .card-body, #book-info .card-body {
             overflow-y: auto;
             text-overflow: ellipsis;
             margin-top: -0.2rem;
+        }
+
+        #buy-section {
+            margin-top: 1rem;
         }
 
         img.card-body {
@@ -45,6 +49,10 @@
             margin-right: auto;
             height: 400px;
             width: 250px;
+        }
+
+        #row2 .card {
+            height: 100%;
         }
 
         #buttons .btn {
@@ -64,40 +72,79 @@
             width: 25%;
         }
 
-
         /* Accommodating for various resolutions */
+        
         @media (max-width: 767px) {
+            #buy-section .card {
+                margin-bottom: 1rem;
+            }
+
             .row {
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-
-            #about-book .card {
-                width: auto;
-            }
-
-            #about-book .col-md-4 {
-                margin-left: 1rem;
-                margin-right: 1rem;
-            }
         }
 
         @media (min-width: 768px) and (max-width: 991px) {
+            .nav-item {
+                padding: 0.5rem;
+            }
+
+            /* BUY SECTION */
+            #buy-section {
+                margin-bottom: -1rem;
+            }
+
+            #buy-section .card {
+                width: 170px;
+            }
+
+            #buy-section h2, a {
+                font-size: 20px;
+                margin: -0.5rem;
+            }
+
             /* ABOUT THE BOOK SECTION */
             #about-book .card {
-                width: 240px;
+                width: 260px;
+            }
+
+            #about-book .row {
+                display: flex;
+                justify-content: center;
             }
 
             #about-book .col-md-4 {
                 width: auto;
-                margin-left: -1rem;
-                margin-right: -1rem;
             }
 
             #about-book #book-cover {
                 max-width: fit-content;
-                max-height: 300px;
+                max-height: 400px;
+            }
+
+            #description.card {
+                width: 442px;
+                margin-left: 1rem;
+            }
+        }
+
+        @media (max-width: 1199px), (max-width: 1399px) {
+            /* BUY SECTION */
+            #buy-section {
+                margin-bottom: 0rem;
+            }
+
+            #buy-section h2 a {
+                font-size: 25px;
+                margin: -0.5rem;
+            }
+        }
+
+        @media (max-width: 1199px) {
+            #buy-section h2 a {
+                font-size: 20px;
             }
         }
 
@@ -147,7 +194,43 @@
                 </div>
 
             </div>
-        </div>     
+        </div> 
+
+        <!-- "Buy the book" section -->
+        <div class="container" id="buy-section">
+            <h3 class="text-center">BUY THE BOOK</h3>
+            <div class="row justify-content-center" id="row2">
+
+                <!-- Amazon link to the papaerback and hardcover versions of the book -->
+                <div class="col-md-3">
+                    <div class="card border-0 mx-auto">
+                        <div id="hard-cover" class="card-body text-center">
+                            <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_info.book_name|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A5&ref=nb_sb_noss" target="_blank">HARD COVER</a></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amazon link to the e-book version of the book -->
+                <div class="col-md-3">
+                    <div class="card border-0 mx-auto">
+                        <div id="e-book" class="card-body text-center">
+                            <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_info.book_name|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A154606011&ref=nb_sb_noss" target="_blank">E-BOOK</a></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amazon link to the audiobook version of the book -->
+                <div class="col-md-3">
+                    <div class="card border-0 mx-auto">
+                        <div id="audiobook" class="card-body text-center">
+                            <h2 class="card-footer border-0"><a href="https://www.amazon.com/s?k={{ book_info.book_name|replace(' ', '+') }}&rh=n%3A283155%2Cn%3A%211000%2Cn%3A283155&ref=nb_sb_noss" target="_blank">AUDIOBOOK</a></h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> 
+
     </div>
     
 {% endblock %}
