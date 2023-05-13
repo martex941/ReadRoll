@@ -136,7 +136,7 @@ Index page contains a set of bootstrap cards, each of them shows an exemplary bo
 Rolled template contains a little bit of CSS code which helps the page stay dynamic during resolution changes. It needed the most personal tweaks as it has the biggest variety of objects out of all pages: buttons, headers, cards, images, long descriptions and flashing messages.
 
 The page itself takes variables from the *rolled* function and displays them using jinja syntax and bootstrap cards.
-![Example of a rolled book](./rolled_example.png)
+![Example of a rolled book](./static/rolled_example.png)
 
 **2.4 Library and book_view**
 
