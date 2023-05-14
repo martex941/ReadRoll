@@ -36,9 +36,6 @@
 -- user_id INTEGER NOT NULL, 
 -- FOREIGN KEY(user_id) REFERENCES users(id));
 
--- Acc for testing
--- ADMIN1, admin111
-
 
 -- DROP TABLE temp_library;
 -- DROP TABLE users;

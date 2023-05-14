@@ -1,10 +1,6 @@
 /* THEME COLORS*/
 .light-theme {
     /* LIGHT THEME */
-    /* --ash-gray: #96bbbbff;
-    --hookers-green: #618985ff;
-    --black-olive: #414535ff;
-    --dutch-white: #f2e3bcff; */
     --background-color: #96bbbbff;
     --primary-color: #618985ff;
     --card-color: #618985ff;
@@ -13,9 +9,6 @@
 
 .dark-theme {
      /* DARK THEME */
-     /* --almond: #f1dac4ff;
-     --oxford-blue: #161b33ff;
-     --rich-black: #0d0c1dff; */
     --background-color: #161b33ff;
     --primary-color: #0d0c1dff;
     --card-color: #0d0c1dff;
