@@ -1,13 +1,13 @@
-### **ReadRoll**
+# **ReadRoll**
 <sub>By: Kamil Wiśniewski</sub>
 
-# Video demo:
+### Video demo:
 
-## **What is ReadRoll?**
+# **What is ReadRoll?**
 
 ReadRoll is a website which allows the user to "roll" a book. *What does that mean?* The user is shown a choice between various book genres and can choose one at a time. After the user clicks on one of the genres they are directed to their "rolled" book. The main feature of the website is the ability to generate a random book based on the chosen genre. ReadRoll uses Google Books API to achieve this. When the book is rolled the website displays information about it. There is also an option to buy the book i.e. be redirected to one of the hyperlinks to Amazon's website.
 
-## Languages/Frameworks used:
+# Languages/Frameworks used:
 - HTML
 - CSS (and bootstrap)
 - JavaScript
@@ -15,11 +15,11 @@ ReadRoll is a website which allows the user to "roll" a book. *What does that me
 - SQLite3
 - [Google Books API](https://developers.google.com/books/)
 
-### Overview
+# Overview
 
 # **1. Python and flask**
 
-#**1.1 app.py**
+**1.1 app.py**
 
 This is the file which contains all of the necessary functions for the website to work properly. It has 9 different routes.
 
